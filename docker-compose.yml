@@ -1,0 +1,11 @@
+version: '3'
+services:
+  database:
+    image: postgres:11
+    container_name: placemaps
+    ports:
+      - 7777:5432
+    environment:
+      POSTGRES_DB: placemaps
+      POSTGRES_USER: placemaps
+      POSTGRES_PASSWORD: LFVyGro0
