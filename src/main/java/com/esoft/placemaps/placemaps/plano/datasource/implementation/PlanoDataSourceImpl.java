@@ -1,8 +1,8 @@
-package com.esoft.placemaps.plano.datasource.implementation;
+package com.esoft.placemaps.placemaps.plano.datasource.implementation;
 
-import com.esoft.placemaps.plano.Plano;
-import com.esoft.placemaps.plano.datasource.PlanoDataSource;
-import com.esoft.placemaps.plano.repository.PlanoRepository;
+import com.esoft.placemaps.placemaps.plano.Plano;
+import com.esoft.placemaps.placemaps.plano.repository.PlanoRepository;
+import com.esoft.placemaps.placemaps.plano.datasource.PlanoDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

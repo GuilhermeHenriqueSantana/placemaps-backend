@@ -1,7 +1,7 @@
-package com.esoft.placemaps.pedidocadastro.controller;
+package com.esoft.placemaps.placemaps.pedidocadastro.controller;
 
-import com.esoft.placemaps.pedidocadastro.PedidoCadastro;
-import com.esoft.placemaps.pedidocadastro.service.PedidoCadastroService;
+import com.esoft.placemaps.placemaps.pedidocadastro.PedidoCadastro;
+import com.esoft.placemaps.placemaps.pedidocadastro.service.PedidoCadastroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
