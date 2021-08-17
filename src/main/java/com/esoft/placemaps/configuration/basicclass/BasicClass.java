@@ -1,4 +1,4 @@
-package com.esoft.placemaps.basicclass;
+package com.esoft.placemaps.configuration.basicclass;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

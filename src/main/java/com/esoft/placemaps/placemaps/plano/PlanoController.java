@@ -1,7 +1,5 @@
-package com.esoft.placemaps.plano.controller;
+package com.esoft.placemaps.placemaps.plano;
 
-import com.esoft.placemaps.plano.Plano;
-import com.esoft.placemaps.plano.service.PlanoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
