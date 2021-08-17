@@ -1,4 +1,4 @@
-package com.esoft.placemaps.placemaps.plano.controller;
+package com.esoft.placemaps.placemaps.plano;
 
 import com.esoft.placemaps.placemaps.plano.Plano;
 import com.esoft.placemaps.placemaps.plano.service.PlanoService;
