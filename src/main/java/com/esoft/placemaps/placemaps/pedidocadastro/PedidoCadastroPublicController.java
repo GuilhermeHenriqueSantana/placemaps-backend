@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/pedidocadastro")
-public class PedidoCadastroController {
+@RequestMapping("/api/public/pedidocadastro")
+public class PedidoCadastroPublicController {
     private final PedidoCadastroService pedidoCadastroService;
 
     @Autowired
-    public PedidoCadastroController(PedidoCadastroService pedidoCadastroService) {
+    public PedidoCadastroPublicController(PedidoCadastroService pedidoCadastroService) {
         this.pedidoCadastroService = pedidoCadastroService;
     }
 
