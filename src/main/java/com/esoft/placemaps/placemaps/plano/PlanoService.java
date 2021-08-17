@@ -1,23 +1,21 @@
-package com.esoft.placemaps.placemaps.plano.service;
+package com.esoft.placemaps.placemaps.plano;
 
-import com.esoft.placemaps.placemaps.plano.Plano;
-import com.esoft.placemaps.placemaps.plano.datasource.PlanoDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PlanoService {
-    private final PlanoDataSource planoDataSource;
+    private final PlanoRepository planoRepository;
 
     @Autowired
-    public PlanoService(PlanoDataSource planoDataSource) {
-        this.planoDataSource = planoDataSource;
+    public PlanoService(PlanoRepository planoRepository) {
+        this.planoRepository = planoRepository;
     }
 
     @Transactional
     public Plano save(Plano plano) {
-        return this.planoDataSource.save(plano);
+        return this.planoRepository.save(plano);
     }
 }
 

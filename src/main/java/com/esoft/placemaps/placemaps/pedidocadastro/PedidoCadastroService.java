@@ -1,7 +1,5 @@
-package com.esoft.placemaps.placemaps.pedidocadastro.service;
+package com.esoft.placemaps.placemaps.pedidocadastro;
 
-import com.esoft.placemaps.placemaps.pedidocadastro.PedidoCadastro;
-import com.esoft.placemaps.placemaps.pedidocadastro.repository.PedidoCadastroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
