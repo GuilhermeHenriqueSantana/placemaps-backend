@@ -1,9 +1,5 @@
 package com.esoft.placemaps.placemaps.ponto;
 
-import java.util.List;
-
-import com.esoft.placemaps.placemaps.localizacao.LocalizacaoService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,14 +14,9 @@ public class PontoController {
     @Autowired
     private PontoService pontoService;
 
-    @Autowired
-    private LocalizacaoService localizacaoService;
-
-    // utilizar dto
     @PostMapping
-    public ResponseEntity<Ponto> save(@RequestBody Ponto ponto, @RequestBody List<String> localizacaoIds) {
-        ponto.setLocalizacoes(localizacaoService.pegarLocalizacoesPeloId(localizacaoIds));
-        return ResponseEntity.ok(this.pontoService.save(ponto));
+    public ResponseEntity<Ponto> salvar(@RequestBody Ponto ponto) {
+        return ResponseEntity.ok(this.pontoService.salvar(ponto));
     }
 
 }

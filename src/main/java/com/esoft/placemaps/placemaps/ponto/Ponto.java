@@ -2,6 +2,7 @@ package com.esoft.placemaps.placemaps.ponto;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -32,10 +33,10 @@ public class Ponto extends BasicClass {
     @Column(name = "subtitulo")
     private String subTitulo;
 
-    @Column(name = "fixo")
+    @Column(name = "fixo", nullable = false)
     private Boolean fixo;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
         name = "ponto_localizacao",
         joinColumns = @JoinColumn(name = "ponto_id"),

@@ -11,7 +11,7 @@ public class PontoService {
     private PontoRepository pontoRepository;
 
     @Transactional
-    public Ponto save(Ponto ponto) {
+    public Ponto salvar(Ponto ponto) {
         return this.pontoRepository.save(ponto);
     }
     
