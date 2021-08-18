@@ -5,12 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -18,15 +14,16 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Entity
 public class Usuario extends BasicClass {
-    @NotNull
+    @Column(name = "nome", nullable = false)
     private String nome;
-    @NotNull
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
-    @NotNull
+    @Column(name = "senha", nullable = false)
     private String senha;
-    @NotNull
+    @Column(name = "tipo_usuario", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
+    @Column(name = "numeracao_documento", length = 14)
     private String numeracaoDocumento;
 }
 
