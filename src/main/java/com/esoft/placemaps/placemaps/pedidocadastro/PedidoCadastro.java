@@ -6,14 +6,16 @@ import com.esoft.placemaps.helpers.EmailHelper;
 import com.esoft.placemaps.helpers.SenhaHelper;
 import com.esoft.placemaps.placemaps.pedidocadastro.exception.PedidoCadastroBadRequestException;
 import com.esoft.placemaps.placemaps.plano.Plano;
+import com.esoft.placemaps.placemaps.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Getter
@@ -22,20 +24,20 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 public class PedidoCadastro extends BasicClass {
-    @NotNull
+    @Column(name = "nome", nullable = false)
     private String nome;
-    @NotNull
+    @Column(name = "email", nullable = false)
     private String email;
-    @NotNull
+    @Column(name = "senha", nullable = false)
     private String senha;
-    @NotNull
+    @Column(name = "numeracao_documento", nullable = false, length = 14)
     private String numeracaoDocumento;
-    @NotNull
     @OneToOne
+    @JoinColumn(name = "plano_id", nullable = false)
     private Plano plano;
-
-    //@OneToOne --- Fazer ligação com usuario
-    private String usuario;
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     public void validarPedidoCadastro() {
         if (Objects.isNull(this.numeracaoDocumento) || !DocumentoHelper.documentoValido(this.numeracaoDocumento)) {

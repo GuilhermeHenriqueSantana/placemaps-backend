@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -16,11 +16,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 public class Plano extends BasicClass {
-    @NotNull
+    @Column(name = "nome", nullable = false)
     private String nome;
-    @NotNull
+    @Column(name = "descricao", nullable = false)
     private String descricao;
-    @NotNull
+    @Column(name = "valor", nullable = false)
     private BigDecimal valor;
 }
 

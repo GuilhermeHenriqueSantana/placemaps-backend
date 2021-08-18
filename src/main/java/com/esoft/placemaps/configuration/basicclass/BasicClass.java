@@ -13,7 +13,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class BasicClass {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", length = 36)
     protected String id;
 
     public BasicClass(){
