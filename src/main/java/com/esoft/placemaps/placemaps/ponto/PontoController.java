@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/ponto")
 public class PontoController {
     
+    private final PontoService pontoService;
+
     @Autowired
-    private PontoService pontoService;
+    public PontoController(PontoService pontoService) {
+        this.pontoService = pontoService;
+    }
 
     @PostMapping
     public ResponseEntity<Ponto> salvar(@RequestBody Ponto ponto) {

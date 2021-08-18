@@ -7,8 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PontoService {
 
+    private final PontoRepository pontoRepository;
+
     @Autowired
-    private PontoRepository pontoRepository;
+    public PontoService(PontoRepository pontoRepository) {
+        this.pontoRepository = pontoRepository;
+    }
 
     @Transactional
     public Ponto salvar(Ponto ponto) {
