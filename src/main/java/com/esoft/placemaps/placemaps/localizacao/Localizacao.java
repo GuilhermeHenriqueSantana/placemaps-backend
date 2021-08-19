@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
@@ -48,7 +49,7 @@ public class Localizacao extends BasicClass {
     @Column(name = "latitude", nullable = false)
     private Float latitude;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
     @JoinTable(
         name = "localizacao_dia_da_semana",
         joinColumns = @JoinColumn(name = "localizacao_id"),

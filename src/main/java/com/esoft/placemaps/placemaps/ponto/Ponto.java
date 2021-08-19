@@ -10,6 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
+import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanal;
 import com.esoft.placemaps.placemaps.localizacao.Localizacao;
 
 import lombok.AllArgsConstructor;
@@ -43,6 +44,11 @@ public class Ponto extends BasicClass {
         inverseJoinColumns = @JoinColumn(name = "localizacao_id")
     )
     private List<Localizacao> localizacoes;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ponto_id")
+    private List<DadoSemanal> dadosSemanais;
+    
     /*
     ligação com 
     evento

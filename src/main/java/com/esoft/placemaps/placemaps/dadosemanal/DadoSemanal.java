@@ -8,10 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
 import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
+import com.esoft.placemaps.placemaps.item.Item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,11 +42,15 @@ public class DadoSemanal extends BasicClass {
     @Column(name = "possui_valor", nullable = false)
     private Boolean possuiValor;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
     @JoinTable(
         name = "dado_semanal_dia_da_semana",
         joinColumns = @JoinColumn(name = "dado_semanal_id"),
         inverseJoinColumns = @JoinColumn(name = "dia_da_semana_id")
     )
     private List<DiaDaSemana> diasDaSemana;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "dado_semanal_id")
+    private List<Item> itens;
 }
