@@ -1,9 +1,16 @@
 package com.esoft.placemaps.placemaps.localizacao;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
+import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +48,12 @@ public class Localizacao extends BasicClass {
     @Column(name = "latitude", nullable = false)
     private Float latitude;
 
-    //ligação com diadasemana
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+        name = "localizacao_dia_da_semana",
+        joinColumns = @JoinColumn(name = "localizacao_id"),
+        inverseJoinColumns = @JoinColumn(name = "dia_da_semana_id")
+    )
+    private List<DiaDaSemana> diasDaSemana;
 
 }
