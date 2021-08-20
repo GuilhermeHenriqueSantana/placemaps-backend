@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class PedidoCadastroService {
+
     private final PedidoCadastroRepository pedidoCadastroRepository;
     private final PlanoRepository planoRepository;
     private final UsuarioRepository usuarioRepository;
@@ -28,7 +29,7 @@ public class PedidoCadastroService {
     }
 
     @Transactional
-    public PedidoCadastro save(PedidoCadastro pedidoCadastro) {
+    public PedidoCadastro salvar(PedidoCadastro pedidoCadastro) {
         pedidoCadastro.validarPedidoCadastro();
         this.validarPlanoVinculado(pedidoCadastro.getPlano());
         this.validarEmailExistente(pedidoCadastro);
@@ -53,4 +54,5 @@ public class PedidoCadastroService {
             }
         }
     }
+
 }

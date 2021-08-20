@@ -24,17 +24,23 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 public class PedidoCadastro extends BasicClass {
+
     @Column(name = "nome", nullable = false)
     private String nome;
+
     @Column(name = "email", nullable = false)
     private String email;
+
     @Column(name = "senha", nullable = false)
     private String senha;
+
     @Column(name = "numeracao_documento", nullable = false, length = 14)
     private String numeracaoDocumento;
+
     @OneToOne
     @JoinColumn(name = "plano_id", nullable = false)
     private Plano plano;
+
     @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -56,4 +62,5 @@ public class PedidoCadastro extends BasicClass {
             throw new PedidoCadastroBadRequestException("Senha insegura.");
         }
     }
+
 }
