@@ -2,6 +2,7 @@ package com.esoft.placemaps.placemaps.usuario;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
 import com.esoft.placemaps.placemaps.evento.Evento;
+import com.esoft.placemaps.placemaps.foto.Foto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,12 +34,17 @@ public class Usuario extends BasicClass {
     @Column(name = "numeracao_documento", length = 14)
     private String numeracaoDocumento;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     @JoinTable(
             name = "usuario_evento",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "evento_id")
     )
     private List<Evento> eventos;
+
+    @OneToOne
+    @JoinColumn(name = "foto_id")
+    private Foto foto;
+
 }
 
