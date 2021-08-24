@@ -1,6 +1,7 @@
 package com.esoft.placemaps.placemaps.evento;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
+import com.esoft.placemaps.placemaps.contato.Contato;
 import com.esoft.placemaps.placemaps.localizacao.Localizacao;
 import com.esoft.placemaps.placemaps.ponto.Ponto;
 import lombok.AllArgsConstructor;
@@ -40,5 +41,9 @@ public class Evento extends BasicClass {
     @OneToOne
     @JoinColumn(name = "localizacao_id")
     private Localizacao localizacao;
+
+    @OneToOne
+    @JoinColumn(name = "contato_id")
+    private Contato contato;
 
 }
