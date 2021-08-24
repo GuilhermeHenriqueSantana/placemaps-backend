@@ -15,10 +15,12 @@ import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
 import com.esoft.placemaps.placemaps.ponto.Ponto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

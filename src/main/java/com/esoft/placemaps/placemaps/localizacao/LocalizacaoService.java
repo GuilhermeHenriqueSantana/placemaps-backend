@@ -38,19 +38,19 @@ public class LocalizacaoService {
     @Transactional
     public Localizacao salvar(LocalizacaoFormDTO localizacaoFormDTO) {
         Localizacao localizacao = localizacaoFormDTO.gerarLocalizacao();
-        Optional<Ponto> pontoOptional = pontoRepository.findById(localizacaoFormDTO.getIdPonto());
+        Optional<Ponto> pontoOptional = pontoRepository.findById(localizacaoFormDTO.getPontoId());
         if (!pontoOptional.isPresent()) {
             throw new LocalizacaoBadRequestException("Ponto não encontrado.");
         }
         localizacao.setPonto(pontoOptional.get());
         List<DiaDaSemana> diasDaSemana = new ArrayList<>();
-        for (String idDiaDaSemana : localizacaoFormDTO.getIdsDiasDaSemana()) {
+        for (String idDiaDaSemana : localizacaoFormDTO.getDiasDaSemanaIds()){
             Optional<DiaDaSemana> diaDaSemanaOptional = diaDaSemanaRepository.findById(idDiaDaSemana);
             if (diaDaSemanaOptional.isPresent()) {
                 diasDaSemana.add(diaDaSemanaOptional.get());
             }
         }
-        if (diasDaSemana.size() != localizacaoFormDTO.getIdsDiasDaSemana().size()) {
+        if (diasDaSemana.size() != localizacaoFormDTO.getDiasDaSemanaIds().size()) {
             throw new LocalizacaoBadRequestException("Algum(ns) DiaDaSemana não foi encontrado.");
         }
         localizacao.setDiasDaSemana(diasDaSemana);
