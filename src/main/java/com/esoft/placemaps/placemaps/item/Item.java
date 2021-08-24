@@ -2,14 +2,12 @@ package com.esoft.placemaps.placemaps.item;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
 import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanal;
 
+import com.esoft.placemaps.placemaps.foto.Foto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,5 +29,9 @@ public class Item extends BasicClass{
     @ManyToOne
     @JoinColumn(name = "dado_semanal_id", nullable = false)
     private DadoSemanal dadoSemanal;
+
+    @OneToOne
+    @JoinColumn(name = "foto_id")
+    private Foto foto;
 
 }
