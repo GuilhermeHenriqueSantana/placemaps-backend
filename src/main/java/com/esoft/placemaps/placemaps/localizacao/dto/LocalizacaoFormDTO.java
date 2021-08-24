@@ -17,8 +17,8 @@ public class LocalizacaoFormDTO {
     private String rua;
     private Float longitude;
     private Float latitude;
-    private List<String> idsDiasDaSemana;
-    private String idPonto;
+    private List<String> diasDaSemanaIds;
+    private String pontoId;
 
     public Localizacao gerarLocalizacao() {
         return new Localizacao().builder()
