@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/public/pedidocadastro")
 public class PedidoCadastroPublicController {
+
     private final PedidoCadastroService pedidoCadastroService;
 
     @Autowired
@@ -18,7 +19,8 @@ public class PedidoCadastroPublicController {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoCadastro> save(@RequestBody PedidoCadastro pedidoCadastro) {
-        return ResponseEntity.ok(this.pedidoCadastroService.save(pedidoCadastro));
+    public ResponseEntity<PedidoCadastro> salvar(@RequestBody PedidoCadastro pedidoCadastro) {
+        return ResponseEntity.ok(this.pedidoCadastroService.salvar(pedidoCadastro));
     }
+
 }

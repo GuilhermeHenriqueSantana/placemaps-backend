@@ -16,11 +16,15 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 public class Plano extends BasicClass {
+
     @Column(name = "nome", nullable = false)
     private String nome;
+
     @Column(name = "descricao", nullable = false)
     private String descricao;
+
     @Column(name = "valor", nullable = false)
     private BigDecimal valor;
+
 }
 
