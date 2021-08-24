@@ -1,17 +1,9 @@
 package com.esoft.placemaps.placemaps.ponto;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
-import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanal;
-import com.esoft.placemaps.placemaps.localizacao.Localizacao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,18 +29,6 @@ public class Ponto extends BasicClass {
     @Column(name = "fixo", nullable = false)
     private Boolean fixo;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(
-        name = "ponto_localizacao",
-        joinColumns = @JoinColumn(name = "ponto_id"),
-        inverseJoinColumns = @JoinColumn(name = "localizacao_id")
-    )
-    private List<Localizacao> localizacoes;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ponto_id")
-    private List<DadoSemanal> dadosSemanais;
-    
     /*
     ligação com 
     evento

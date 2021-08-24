@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
 import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanal;
@@ -25,5 +27,9 @@ public class Item extends BasicClass{
 
     @Column(name = "valor")
     private BigDecimal valor;
+
+    @ManyToOne
+    @JoinColumn(name = "dado_semanal_id", nullable = false)
+    private DadoSemanal dadoSemanal;
 
 }

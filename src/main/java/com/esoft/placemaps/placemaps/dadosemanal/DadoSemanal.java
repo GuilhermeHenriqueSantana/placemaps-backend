@@ -3,17 +3,16 @@ package com.esoft.placemaps.placemaps.dadosemanal;
 import java.sql.Time;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
 import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
-import com.esoft.placemaps.placemaps.item.Item;
+import com.esoft.placemaps.placemaps.ponto.Ponto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,7 +49,7 @@ public class DadoSemanal extends BasicClass {
     )
     private List<DiaDaSemana> diasDaSemana;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "dado_semanal_id")
-    private List<Item> itens;
+    @ManyToOne
+    @JoinColumn(name = "ponto_id", nullable = false)
+    private Ponto ponto;
 }
