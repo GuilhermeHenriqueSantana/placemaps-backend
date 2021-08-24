@@ -2,9 +2,12 @@ package com.esoft.placemaps.placemaps.ponto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
 
+import com.esoft.placemaps.placemaps.contato.Contato;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,14 +32,8 @@ public class Ponto extends BasicClass {
     @Column(name = "fixo", nullable = false)
     private Boolean fixo;
 
-    /*
-    ligação com 
-    evento
-    contato
-    foto
-    comentario
-    avaliacao
-    categoria  
-    */
+    @OneToOne
+    @JoinColumn(name = "contato_id")
+    private Contato contato;
 
 }
