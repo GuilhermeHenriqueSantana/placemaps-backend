@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PlanoService {
+
     private final PlanoRepository planoRepository;
 
     @Autowired
@@ -14,8 +15,9 @@ public class PlanoService {
     }
 
     @Transactional
-    public Plano save(Plano plano) {
+    public Plano salvar(Plano plano) {
         return this.planoRepository.save(plano);
     }
+
 }
 

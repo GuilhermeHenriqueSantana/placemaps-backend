@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/plano")
 public class PlanoController {
+
     private final PlanoService planoService;
 
     @Autowired
@@ -18,7 +19,8 @@ public class PlanoController {
     }
 
     @PostMapping
-    public ResponseEntity<Plano> save(@RequestBody Plano plano) {
-        return ResponseEntity.ok(this.planoService.save(plano));
+    public ResponseEntity<Plano> salvar(@RequestBody Plano plano) {
+        return ResponseEntity.ok(this.planoService.salvar(plano));
     }
+
 }
