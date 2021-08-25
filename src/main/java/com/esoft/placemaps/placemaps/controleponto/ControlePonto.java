@@ -26,7 +26,7 @@ public class ControlePonto extends BasicClass {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinTable(
             name = "controle_ponto_ponto",
             joinColumns = @JoinColumn(name = "controle_ponto_id"),

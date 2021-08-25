@@ -44,6 +44,7 @@ public class PedidoCadastroService {
         pedidoCadastro.validarPedidoCadastro();
         this.validarPlanoVinculado(pedidoCadastro.getPlano());
         this.validarEmailExistente(pedidoCadastro);
+        pedidoCadastro.setSenha(this.autenticacaoService.criptografarSenha(pedidoCadastro.getSenha()));
         return this.pedidoCadastroRepository.save(pedidoCadastro);
     }
 
@@ -57,7 +58,7 @@ public class PedidoCadastroService {
             } else {
                 usuario.setEmail(pedidoCadastroOptional.get().getEmail());
                 usuario.setNome(pedidoCadastroOptional.get().getNome());
-                usuario.setSenha(this.autenticacaoService.criptografarSenha(pedidoCadastroOptional.get().getSenha()));
+                usuario.setSenha(pedidoCadastroOptional.get().getSenha());
             }
             usuario.setTipoUsuario(TipoUsuario.PROPRIETARIO);
             usuario.setNumeracaoDocumento(pedidoCadastroOptional.get().getNumeracaoDocumento());
@@ -68,6 +69,8 @@ public class PedidoCadastroService {
                     .pontosSolicitados(aceiteDePedidoDTO.getQuantidadeDePontos())
                     .usuario(this.usuarioRepository.save(usuario))
                     .build());
+
+            this.pedidoCadastroRepository.deleteById(aceiteDePedidoDTO.getPedidoId());
             return "OK";
         }
         throw new PedidoCadastroBadRequestException("Pedido não encontrado.");
