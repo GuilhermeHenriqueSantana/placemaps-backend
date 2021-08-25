@@ -28,6 +28,7 @@ public class ItemService {
     @Transactional
     public Item salvar(ItemFormDTO itemFormDTO) {
         Item item = itemFormDTO.gerarItem();
+        System.out.println(itemFormDTO.getDadoSemanalId());
         Optional<DadoSemanal> dadoSemanalOptional = dadoSemanalRepository.findById(itemFormDTO.getDadoSemanalId());
         if (dadoSemanalOptional.isPresent()) {
             item.setDadoSemanal(dadoSemanalOptional.get());
