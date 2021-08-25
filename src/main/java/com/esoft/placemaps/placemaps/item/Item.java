@@ -30,7 +30,7 @@ public class Item extends BasicClass{
     @JoinColumn(name = "dado_semanal_id", nullable = false)
     private DadoSemanal dadoSemanal;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "foto_id")
     private Foto foto;
 
