@@ -42,7 +42,7 @@ public class Usuario extends BasicClass {
     )
     private List<Evento> eventos;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "foto_id")
     private Foto foto;
 
