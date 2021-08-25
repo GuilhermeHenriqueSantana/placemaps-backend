@@ -1,5 +1,6 @@
 package com.esoft.placemaps.placemaps.pedidocadastro;
 
+import com.esoft.placemaps.placemaps.pedidocadastro.dto.AceiteDePedidoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,11 @@ public class PedidoCadastroPublicController {
     @PostMapping
     public ResponseEntity<PedidoCadastro> salvar(@RequestBody PedidoCadastro pedidoCadastro) {
         return ResponseEntity.ok(this.pedidoCadastroService.salvar(pedidoCadastro));
+    }
+
+    @PostMapping("/aceitar-pedido")
+    public ResponseEntity<String> aceitarPedido(@RequestBody AceiteDePedidoDTO aceiteDePedidoDTO) {
+        return ResponseEntity.ok(this.pedidoCadastroService.aceitarPedido(aceiteDePedidoDTO));
     }
 
 }
