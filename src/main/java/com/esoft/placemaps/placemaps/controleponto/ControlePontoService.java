@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class ControlePontoService {
 
@@ -31,6 +33,21 @@ public class ControlePontoService {
         controlePonto.setPontosSolicitados(quantidade);
         this.controlePontoRepository.save(controlePonto);
         return "OK";
+    }
+
+    @Transactional
+    public String aceitarNegarSolicitacaoDeAlteracao(String controlePontoId, Boolean aceitar) {
+        Optional<ControlePonto> controlePontoOptional = this.controlePontoRepository.findById(controlePontoId);
+        if (controlePontoOptional.isPresent()) {
+            if (aceitar) {
+                controlePontoOptional.get().setPontosAtivos(controlePontoOptional.get().getPontosSolicitados());
+            } else {
+                controlePontoOptional.get().setPontosSolicitados(controlePontoOptional.get().getPontosAtivos());
+            }
+            this.controlePontoRepository.save(controlePontoOptional.get());
+            return "OK";
+        }
+        throw new ControlePontoBadRequestException("Controle de ponto não encontrado.");
     }
 
 }

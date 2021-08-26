@@ -23,4 +23,13 @@ public class ControlePontoController {
         return ResponseEntity.ok(this.controlePontoService.alterarQuantidadePontosSolicitados(quantidade));
     }
 
+    @PutMapping("/aceitar-solicitacao-pontos/{controlePontoId}")
+    public ResponseEntity<String> aceitarSolicitacaoDeAlteracao(@PathVariable String controlePontoId) {
+        return ResponseEntity.ok(this.controlePontoService.aceitarNegarSolicitacaoDeAlteracao(controlePontoId, true));
+    }
+
+    @PutMapping("/negar-solicitacao-pontos/{controlePontoId}")
+    public ResponseEntity<String> negarSolicitacaoDeAlteracao(@PathVariable String controlePontoId) {
+        return ResponseEntity.ok(this.controlePontoService.aceitarNegarSolicitacaoDeAlteracao(controlePontoId, false));
+    }
 }
