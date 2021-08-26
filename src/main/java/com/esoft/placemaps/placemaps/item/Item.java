@@ -9,10 +9,12 @@ import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanal;
 
 import com.esoft.placemaps.placemaps.foto.Foto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
