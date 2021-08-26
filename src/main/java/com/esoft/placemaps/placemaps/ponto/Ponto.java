@@ -3,7 +3,7 @@ package com.esoft.placemaps.placemaps.ponto;
 import javax.persistence.*;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
-
+import com.esoft.placemaps.placemaps.categoria.Categoria;
 import com.esoft.placemaps.placemaps.contato.Contato;
 import com.esoft.placemaps.placemaps.foto.Foto;
 import lombok.AllArgsConstructor;
@@ -36,7 +36,6 @@ public class Ponto extends BasicClass {
     @JoinColumn(name = "contato_id")
     private Contato contato;
 
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "ponto_foto",
@@ -44,5 +43,9 @@ public class Ponto extends BasicClass {
             inverseJoinColumns = @JoinColumn(name = "foto_id")
     )
     private List<Foto> fotos;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
 
 }

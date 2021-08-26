@@ -25,7 +25,7 @@ public class DadoSemanalFormDTO {
             .horaFim(horaFim)
             .descricao(descricao)
             .possuiValor(possuiValor)
-        .build();
+            .build();
     }
     
 }
