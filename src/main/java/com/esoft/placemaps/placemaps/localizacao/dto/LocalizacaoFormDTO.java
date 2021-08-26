@@ -25,7 +25,7 @@ public class LocalizacaoFormDTO {
             .pais(pais).estado(estado).cidade(cidade)
             .bairro(bairro).numero(numero).rua(rua)
             .longitude(longitude).latitude(latitude)
-        .build();
+            .build();
     }
     
 }
