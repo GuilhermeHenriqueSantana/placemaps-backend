@@ -34,7 +34,7 @@ public class Usuario extends BasicClass {
     @Column(name = "numeracao_documento", length = 14)
     private String numeracaoDocumento;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "usuario_evento",
             joinColumns = @JoinColumn(name = "usuario_id"),
