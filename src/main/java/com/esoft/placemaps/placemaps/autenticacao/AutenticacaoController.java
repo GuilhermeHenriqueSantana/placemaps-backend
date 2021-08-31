@@ -1,8 +1,15 @@
 package com.esoft.placemaps.placemaps.autenticacao;
 
+import com.esoft.placemaps.placemaps.autenticacao.dto.LoginDTO;
+import com.esoft.placemaps.placemaps.autenticacao.dto.RespostaLoginDTO;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +21,34 @@ public class AutenticacaoController {
 
     private final AutenticacaoService autenticacaoService;
 
+    private final AuthenticationManager authenticationManager;
+
     @Autowired
-    public AutenticacaoController(AutenticacaoService autenticacaoService) {
+    public AutenticacaoController(AutenticacaoService autenticacaoService,
+                                  AuthenticationManager authenticationManager) {
         this.autenticacaoService = autenticacaoService;
+        this.authenticationManager = authenticationManager;
+    }
+
+    @PostMapping
+    public ResponseEntity<RespostaLoginDTO> login(@RequestBody LoginDTO loginDTO) {
+        try {
+            Authentication authentication = this.authenticationManager
+                    .authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    loginDTO.getEmail(), loginDTO.getSenha()
+                            )
+                    );
+
+            RespostaLoginDTO respostaLoginDTO = this.autenticacaoService.realizarLogin(loginDTO.getEmail(), loginDTO.getSenha());
+            return ResponseEntity.ok(respostaLoginDTO);
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @PostMapping("/cadastrar-usuario")
-    public ResponseEntity<String> cadastrarUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<RespostaLoginDTO> cadastrarUsuario(@RequestBody Usuario usuario) {
         return ResponseEntity.ok(this.autenticacaoService.cadastrarUsuario(usuario));
     }
 
