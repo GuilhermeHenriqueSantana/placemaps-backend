@@ -1,9 +1,9 @@
 package com.esoft.placemaps.placemaps.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +18,16 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PutMapping("evento/{eventoId}/cadastrar")
-    public void cadastrarUsuarioAtualNoEvento(@PathVariable String eventoId) {
-        usuarioService.cadastrarNoEvento(eventoId);
+    @PutMapping("/lembrar-evento/{eventoId}")
+    public ResponseEntity<String> lembrarEvento(@PathVariable String eventoId) {
+        usuarioService.manterLembrete(eventoId, true);
+        return ResponseEntity.ok("Ok");
+    }
+
+    @PutMapping("/esquecer-evento/{eventoId}")
+    public ResponseEntity<String> esquecerEvento(@PathVariable String eventoId) {
+        usuarioService.manterLembrete(eventoId, false);
+        return ResponseEntity.ok("Ok");
     }
     
 }
