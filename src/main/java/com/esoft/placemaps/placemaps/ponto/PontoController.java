@@ -2,6 +2,7 @@ package com.esoft.placemaps.placemaps.ponto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +19,9 @@ public class PontoController {
         this.pontoService = pontoService;
     }
 
-    @PostMapping
-    public ResponseEntity<Ponto> salvar(@RequestBody Ponto ponto) {
-        return ResponseEntity.ok(this.pontoService.salvar(ponto));
+    @PostMapping("/categoria/{categoriaId}")
+    public ResponseEntity<Ponto> salvar(@PathVariable String categoriaId, @RequestBody Ponto ponto) {
+        return ResponseEntity.ok(this.pontoService.salvar(categoriaId, ponto));
     }
 
 }
