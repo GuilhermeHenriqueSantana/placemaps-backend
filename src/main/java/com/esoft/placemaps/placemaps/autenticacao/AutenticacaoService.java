@@ -25,6 +25,7 @@ public class AutenticacaoService {
 
     @Transactional
     public RespostaLoginDTO cadastrarUsuario(Usuario usuario) {
+        usuario.validarUsuario();
         usuario.setTipoUsuario(TipoUsuario.USUARIO);
         String senha = usuario.getSenha();
         usuario.setSenha(this.criptografarSenha(senha));
