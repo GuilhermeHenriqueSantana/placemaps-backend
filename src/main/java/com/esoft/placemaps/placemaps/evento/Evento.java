@@ -33,7 +33,7 @@ public class Evento extends BasicClass {
     @Column(name = "descricao", nullable = false, length = 1000)
     private String descricao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ponto_id")
     private Ponto ponto;
 

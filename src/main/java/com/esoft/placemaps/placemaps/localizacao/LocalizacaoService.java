@@ -56,5 +56,13 @@ public class LocalizacaoService {
         localizacao.setDiasDaSemana(diasDaSemana);
         return localizacaoRepository.save(localizacao);
     }
+
+    public Localizacao obterLocalizacaoPeloIdPonto(String pontoId) {
+        Optional<Localizacao> localizacaoOptional = localizacaoRepository.findByPontoId(pontoId);
+        if (!localizacaoOptional.isPresent()) {
+            throw new LocalizacaoBadRequestException("Localização não econtrada pelo id do ponto.");
+        }
+        return localizacaoOptional.get();
+    }
     
 }

@@ -1,7 +1,10 @@
 package com.esoft.placemaps.placemaps.ponto;
 
+import java.util.Optional;
+
 import com.esoft.placemaps.placemaps.categoria.Categoria;
 import com.esoft.placemaps.placemaps.categoria.CategoriaService;
+import com.esoft.placemaps.placemaps.ponto.exception.PontoBadRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,14 @@ public class PontoService {
         Categoria categoria = categoriaService.obterCategoriaExistente(categoriaId);
         ponto.setCategoria(categoria);
         return this.pontoRepository.save(ponto);
+    }
+
+    public Ponto obterPontoExistente(String pontoId) {
+        Optional<Ponto> pontoOptional = pontoRepository.findById(pontoId);
+        if (!pontoOptional.isPresent()) {
+            throw new PontoBadRequestException("Ponto não econtrado.");
+        }
+        return pontoOptional.get();
     }
     
 }
