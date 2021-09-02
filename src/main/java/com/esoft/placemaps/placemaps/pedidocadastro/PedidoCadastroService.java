@@ -5,8 +5,7 @@ import com.esoft.placemaps.placemaps.controleponto.ControlePonto;
 import com.esoft.placemaps.placemaps.controleponto.ControlePontoRepository;
 import com.esoft.placemaps.placemaps.pedidocadastro.dto.AceiteDePedidoDTO;
 import com.esoft.placemaps.placemaps.pedidocadastro.exception.PedidoCadastroBadRequestException;
-import com.esoft.placemaps.placemaps.plano.Plano;
-import com.esoft.placemaps.placemaps.plano.PlanoRepository;
+import com.esoft.placemaps.placemaps.plano.PlanoService;
 import com.esoft.placemaps.placemaps.usuario.TipoUsuario;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioRepository;
@@ -21,28 +20,28 @@ import java.util.Optional;
 public class PedidoCadastroService {
 
     private final PedidoCadastroRepository pedidoCadastroRepository;
-    private final PlanoRepository planoRepository;
     private final UsuarioRepository usuarioRepository;
     private final AutenticacaoService autenticacaoService;
     private final ControlePontoRepository controlePontoRepository;
+    private final PlanoService planoService;
 
     @Autowired
     public PedidoCadastroService(PedidoCadastroRepository pedidoCadastroRepository,
-                                 PlanoRepository planoRepository,
                                  UsuarioRepository usuarioRepository,
                                  AutenticacaoService autenticacaoService,
-                                 ControlePontoRepository controlePontoRepository) {
+                                 ControlePontoRepository controlePontoRepository,
+                                 PlanoService planoService) {
         this.pedidoCadastroRepository = pedidoCadastroRepository;
-        this.planoRepository = planoRepository;
         this.usuarioRepository = usuarioRepository;
         this.autenticacaoService = autenticacaoService;
         this.controlePontoRepository = controlePontoRepository;
+        this.planoService = planoService;
     }
 
     @Transactional
-    public PedidoCadastro salvar(PedidoCadastro pedidoCadastro) {
+    public PedidoCadastro salvar(PedidoCadastro pedidoCadastro, String planoId) {
         pedidoCadastro.validarPedidoCadastro();
-        this.validarPlanoVinculado(pedidoCadastro.getPlano());
+        pedidoCadastro.setPlano(this.planoService.obterPlanoExistente(planoId));
         this.validarEmailExistente(pedidoCadastro);
         pedidoCadastro.setSenha(this.autenticacaoService.criptografarSenha(pedidoCadastro.getSenha()));
         return this.pedidoCadastroRepository.save(pedidoCadastro);
@@ -63,10 +62,14 @@ public class PedidoCadastroService {
             usuario.setTipoUsuario(TipoUsuario.PROPRIETARIO);
             usuario.setNumeracaoDocumento(pedidoCadastroOptional.get().getNumeracaoDocumento());
 
+            Integer quantidadePontos = Objects.isNull(aceiteDePedidoDTO.getQuantidadeDePontos())
+                    ? pedidoCadastroOptional.get().getPlano().getPontos()
+                    : aceiteDePedidoDTO.getQuantidadeDePontos();
+
             this.controlePontoRepository.save(new ControlePonto()
                     .builder()
-                    .pontosAtivos(aceiteDePedidoDTO.getQuantidadeDePontos())
-                    .pontosSolicitados(aceiteDePedidoDTO.getQuantidadeDePontos())
+                    .pontosAtivos(quantidadePontos)
+                    .pontosSolicitados(quantidadePontos)
                     .usuario(this.usuarioRepository.save(usuario))
                     .build());
 
@@ -74,16 +77,6 @@ public class PedidoCadastroService {
             return "OK";
         }
         throw new PedidoCadastroBadRequestException("Pedido não encontrado.");
-    }
-
-    public void validarPlanoVinculado(Plano plano) {
-        if (Objects.isNull(plano) || Objects.isNull(plano.getId())) {
-            throw new PedidoCadastroBadRequestException("Plano inválido.");
-        }
-        Optional<Plano> planoOptional = this.planoRepository.findById(plano.getId());
-        if (!planoOptional.isPresent()) {
-            throw new PedidoCadastroBadRequestException("Plano não encontrado.");
-        }
     }
 
     public void validarEmailExistente(PedidoCadastro pedidoCadastro) {

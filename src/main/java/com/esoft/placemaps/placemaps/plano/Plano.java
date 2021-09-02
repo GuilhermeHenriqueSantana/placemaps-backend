@@ -26,5 +26,8 @@ public class Plano extends BasicClass {
     @Column(name = "valor", nullable = false)
     private BigDecimal valor;
 
+    @Column(name = "pontos", nullable = false)
+    private Integer pontos;
+
 }
 
