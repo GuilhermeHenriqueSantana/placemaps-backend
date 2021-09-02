@@ -2,6 +2,7 @@ package com.esoft.placemaps.placemaps.autenticacao;
 
 import com.esoft.placemaps.placemaps.autenticacao.dto.LoginDTO;
 import com.esoft.placemaps.placemaps.autenticacao.dto.RespostaLoginDTO;
+import com.esoft.placemaps.placemaps.autenticacao.dto.TrocaDeSenhaDTO;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,22 @@ public class AutenticacaoController {
 
             RespostaLoginDTO respostaLoginDTO = this.autenticacaoService.realizarLogin(loginDTO.getEmail(), loginDTO.getSenha());
             return ResponseEntity.ok(respostaLoginDTO);
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PostMapping(path = "/trocar-senha")
+    public ResponseEntity<RespostaLoginDTO> trocarSenha(@RequestBody TrocaDeSenhaDTO trocaDeSenhaDTO) {
+        try {
+            Authentication authentication =this.authenticationManager
+                    .authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    trocaDeSenhaDTO.getEmail(), trocaDeSenhaDTO.getSenha()
+                            )
+                    );
+
+            return ResponseEntity.ok(this.autenticacaoService.trocarSenha(trocaDeSenhaDTO));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

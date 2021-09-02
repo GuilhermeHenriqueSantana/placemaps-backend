@@ -1,6 +1,7 @@
 package com.esoft.placemaps.placemaps.autenticacao;
 
 import com.esoft.placemaps.placemaps.autenticacao.dto.RespostaLoginDTO;
+import com.esoft.placemaps.placemaps.autenticacao.dto.TrocaDeSenhaDTO;
 import com.esoft.placemaps.placemaps.usuario.TipoUsuario;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioRepository;
@@ -24,6 +25,7 @@ public class AutenticacaoService {
 
     @Transactional
     public RespostaLoginDTO cadastrarUsuario(Usuario usuario) {
+        usuario.validarUsuario();
         usuario.setTipoUsuario(TipoUsuario.USUARIO);
         String senha = usuario.getSenha();
         usuario.setSenha(this.criptografarSenha(senha));
@@ -48,6 +50,13 @@ public class AutenticacaoService {
         respostaLoginDTO.setTipoUsuario(usuario.getTipoUsuario());
         respostaLoginDTO.setFoto(Objects.isNull(usuario.getFoto()) ? null : usuario.getFoto().getUrl());
         return respostaLoginDTO;
+    }
+
+    public RespostaLoginDTO trocarSenha(TrocaDeSenhaDTO trocaDeSenhaDTO) {
+        Usuario usuario = this.usuarioRepository.findByEmail(trocaDeSenhaDTO.getEmail()).get();
+        usuario.setSenha(this.criptografarSenha(trocaDeSenhaDTO.getNovaSenha()));
+        this.usuarioRepository.save(usuario);
+        return this.realizarLogin(trocaDeSenhaDTO.getEmail(), trocaDeSenhaDTO.getNovaSenha());
     }
 
 }
