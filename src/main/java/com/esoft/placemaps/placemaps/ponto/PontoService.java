@@ -25,8 +25,7 @@ public class PontoService {
 
     @Transactional
     public Ponto salvar(String categoriaId, Ponto ponto) {
-        Categoria categoria = categoriaService.obterCategoriaExistente(categoriaId);
-        ponto.setCategoria(categoria);
+        ponto.setCategoria(categoriaService.obterCategoriaExistente(categoriaId));
         return this.pontoRepository.save(ponto);
     }
 

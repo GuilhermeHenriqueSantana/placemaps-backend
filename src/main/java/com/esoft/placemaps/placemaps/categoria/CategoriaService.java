@@ -3,7 +3,8 @@ package com.esoft.placemaps.placemaps.categoria;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-import javax.xml.catalog.CatalogException;
+
+import com.esoft.placemaps.placemaps.categoria.exception.CategoriaBadRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class CategoriaService {
     public Categoria obterCategoriaExistente(String categoriaId) {
         Optional<Categoria> categoriaOptional = categoriaRepository.findById(categoriaId);
         if (!categoriaOptional.isPresent()) {
-            throw new CatalogException("Categoria não econtrada.");
+            throw new CategoriaBadRequestException("Categoria não econtrada.");
         }
         return categoriaOptional.get();
     }

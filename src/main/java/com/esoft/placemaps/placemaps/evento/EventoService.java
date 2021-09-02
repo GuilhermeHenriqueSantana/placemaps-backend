@@ -36,10 +36,8 @@ public class EventoService {
                 throw new EventoBadRequestException("Id do ponto deve ser passado utilizando variavel na url ex: ?pontoId=id");
             }
         } else {
-            Ponto ponto = pontoService.obterPontoExistente(pontoId);
-            Localizacao localizacao = localizacaoService.obterLocalizacaoPeloIdPonto(pontoId);
-            evento.setPonto(ponto);
-            evento.setLocalizacao(localizacao);
+            evento.setPonto(pontoService.obterPontoExistente(pontoId));
+            evento.setLocalizacao(copiar(localizacaoService.obterLocalizacaoPeloIdPonto(pontoId)));
         }
         return this.eventoRepository.save(evento);
     }
@@ -50,6 +48,19 @@ public class EventoService {
             throw new EventoBadRequestException("Evento não econtrado.");
         }
         return eventoOptional.get();
+    }
+
+    private Localizacao copiar(Localizacao localizacao) {
+        return Localizacao.builder()
+            .pais(localizacao.getPais())
+            .estado(localizacao.getEstado())
+            .cidade(localizacao.getCidade())
+            .bairro(localizacao.getBairro())
+            .numero(localizacao.getNumero())
+            .rua(localizacao.getRua())
+            .longitude(localizacao.getLongitude())
+            .latitude(localizacao.getLatitude())
+            .build();
     }
     
 }
