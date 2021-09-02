@@ -31,11 +31,19 @@ public class AvaliacaoService {
     @Transactional
     public Avaliacao salvar(AvaliacaoFormDTO avaliacaoFormDTO) {
         Avaliacao avaliacao =  avaliacaoFormDTO.gerarAvaliacao();
+        avaliacao.validarAvaliacao();
         Optional<Ponto> pontoOptional = this.pontoRepository.findById(avaliacaoFormDTO.getPontoId());
         if (pontoOptional.isPresent()) {
-            avaliacao.setPonto(pontoOptional.get());
-            avaliacao.setUsuario(this.usuarioService.usuarioAtual().get());
-            return this.avaliacaoRepository.save(avaliacao);
+            Optional<Avaliacao> avaliacaoOptional = this.avaliacaoRepository.findFirstByPontoAndUsuario(pontoOptional.get(), this.usuarioService.usuarioAtual().get());
+            if (avaliacaoOptional.isPresent()) {
+                avaliacaoOptional.get().setDescricao(avaliacao.getDescricao());
+                avaliacaoOptional.get().setNota(avaliacao.getNota());
+                return this.avaliacaoRepository.save(avaliacaoOptional.get());
+            } else {
+                avaliacao.setPonto(pontoOptional.get());
+                avaliacao.setUsuario(this.usuarioService.usuarioAtual().get());
+                return this.avaliacaoRepository.save(avaliacao);
+            }
         }
         throw new AvaliacaoBadRequestException("Ponto não encontrado.");
     }
