@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/public/autenticacao")
-public class AutenticacaoController {
+public class AutenticacaoPublicController {
 
     private final AutenticacaoService autenticacaoService;
 
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AutenticacaoController(AutenticacaoService autenticacaoService,
-                                  AuthenticationManager authenticationManager) {
+    public AutenticacaoPublicController(AutenticacaoService autenticacaoService,
+                                        AuthenticationManager authenticationManager) {
         this.autenticacaoService = autenticacaoService;
         this.authenticationManager = authenticationManager;
     }
