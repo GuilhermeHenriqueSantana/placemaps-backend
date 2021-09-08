@@ -1,12 +1,12 @@
-package com.esoft.placemaps.placemaps.ponto.exception;
+package com.esoft.placemaps.placemaps.plano.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class PontoBadRequestException extends RuntimeException {
+public class PlanoBadRequestException extends RuntimeException {
 
-  public PontoBadRequestException(String mensagem) {
+  public PlanoBadRequestException(String mensagem) {
     super(mensagem);
   }
 

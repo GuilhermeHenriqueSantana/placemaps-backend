@@ -20,7 +20,7 @@ public class PontoController {
     }
 
     @PostMapping("/categoria/{categoriaId}")
-    public ResponseEntity<Ponto> salvar(@PathVariable String categoriaId, @RequestBody Ponto ponto) {
+    public ResponseEntity<String> salvar(@PathVariable String categoriaId, @RequestBody Ponto ponto) {
         return ResponseEntity.ok(this.pontoService.salvar(categoriaId, ponto));
     }
 

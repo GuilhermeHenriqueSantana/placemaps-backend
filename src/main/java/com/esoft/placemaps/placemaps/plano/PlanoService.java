@@ -1,8 +1,11 @@
 package com.esoft.placemaps.placemaps.plano;
 
+import com.esoft.placemaps.placemaps.plano.exception.PlanoBadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class PlanoService {
@@ -17,6 +20,14 @@ public class PlanoService {
     @Transactional
     public Plano salvar(Plano plano) {
         return this.planoRepository.save(plano);
+    }
+
+    public Plano obterPlanoExistente(String planoId) {
+        Optional<Plano> planoOptional = this.planoRepository.findById(planoId);
+        if (!planoOptional.isPresent()) {
+            throw new PlanoBadRequestException("Plano não encontrado.");
+        }
+        return planoOptional.get();
     }
 
 }

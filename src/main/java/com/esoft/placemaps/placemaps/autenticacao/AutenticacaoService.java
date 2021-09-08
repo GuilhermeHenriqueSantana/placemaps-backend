@@ -1,10 +1,12 @@
 package com.esoft.placemaps.placemaps.autenticacao;
 
+import com.esoft.placemaps.helpers.SenhaHelper;
 import com.esoft.placemaps.placemaps.autenticacao.dto.RespostaLoginDTO;
 import com.esoft.placemaps.placemaps.autenticacao.dto.TrocaDeSenhaDTO;
 import com.esoft.placemaps.placemaps.usuario.TipoUsuario;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioRepository;
+import com.esoft.placemaps.placemaps.usuario.exception.UsuarioBadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,9 @@ public class AutenticacaoService {
     }
 
     public RespostaLoginDTO trocarSenha(TrocaDeSenhaDTO trocaDeSenhaDTO) {
+        if (!SenhaHelper.senhaSegura(trocaDeSenhaDTO.getNovaSenha())) {
+            throw new UsuarioBadRequestException("Senha insegura.");
+        }
         Usuario usuario = this.usuarioRepository.findByEmail(trocaDeSenhaDTO.getEmail()).get();
         usuario.setSenha(this.criptografarSenha(trocaDeSenhaDTO.getNovaSenha()));
         this.usuarioRepository.save(usuario);

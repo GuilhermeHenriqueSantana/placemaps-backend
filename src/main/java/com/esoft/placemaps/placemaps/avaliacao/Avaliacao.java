@@ -1,6 +1,7 @@
 package com.esoft.placemaps.placemaps.avaliacao;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
+import com.esoft.placemaps.placemaps.avaliacao.exception.AvaliacaoBadRequestException;
 import com.esoft.placemaps.placemaps.ponto.Ponto;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import lombok.*;
@@ -25,7 +26,7 @@ public class Avaliacao extends BasicClass {
     @Column(name = "descricao", length = 1000)
     private String descricao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
@@ -34,6 +35,11 @@ public class Avaliacao extends BasicClass {
     @JoinColumn(name = "ponto_id", nullable = false)
     private Ponto ponto;
 
+    public void validarAvaliacao() {
+        if (this.nota < 0 || this.nota > 5) {
+            throw new AvaliacaoBadRequestException("Nota inválida.");
+        }
+    }
 }
 
 
