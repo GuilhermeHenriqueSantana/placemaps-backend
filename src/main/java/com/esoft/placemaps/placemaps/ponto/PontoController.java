@@ -19,7 +19,7 @@ public class PontoController {
     }
 
     @PostMapping
-    public ResponseEntity<Ponto> salvar(@RequestBody Ponto ponto) {
+    public ResponseEntity<String> salvar(@RequestBody Ponto ponto) {
         return ResponseEntity.ok(this.pontoService.salvar(ponto));
     }
 
