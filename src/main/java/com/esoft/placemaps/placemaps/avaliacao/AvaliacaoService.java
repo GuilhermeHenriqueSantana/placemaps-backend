@@ -8,7 +8,7 @@ import com.esoft.placemaps.placemaps.controleponto.ControlePontoRepository;
 import com.esoft.placemaps.placemaps.ponto.Ponto;
 import com.esoft.placemaps.placemaps.ponto.PontoRepository;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
-import com.esoft.placemaps.placemaps.usuario.UsuarioService;
+import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +21,14 @@ public class AvaliacaoService {
 
     private final AvaliacaoRepository avaliacaoRepository;
     private final PontoRepository pontoRepository;
-    private final UsuarioService usuarioService;
     private  final ControlePontoRepository controlePontoRepository;
 
     @Autowired
     public AvaliacaoService(AvaliacaoRepository avaliacaoRepository,
                             PontoRepository pontoRepository,
-                            UsuarioService usuarioService,
                             ControlePontoRepository controlePontoRepository) {
         this.avaliacaoRepository = avaliacaoRepository;
         this.pontoRepository = pontoRepository;
-        this.usuarioService = usuarioService;
         this.controlePontoRepository = controlePontoRepository;
     }
 
@@ -41,7 +38,7 @@ public class AvaliacaoService {
         avaliacao.validarAvaliacao();
         Optional<Ponto> pontoOptional = this.pontoRepository.findById(avaliacaoFormDTO.getPontoId());
         if (pontoOptional.isPresent()) {
-            Usuario usuario =  this.usuarioService.usuarioAtual().get();
+            Usuario usuario = UsuarioEscopo.usuarioAtual();
             ControlePonto controlePonto =  this.controlePontoRepository.findFirstByUsuario(usuario);
             if (Objects.nonNull(controlePonto) && controlePonto.getPontos().contains(pontoOptional.get())) {
                 throw new AvaliacaoBadRequestException("Não é possível avaliar o próprio ponto.");
@@ -64,7 +61,7 @@ public class AvaliacaoService {
     public Avaliacao responderAvaliacao(RespostaDeAvaliacaoDTO respostaDeAvaliacaoDTO) {
         Optional<Avaliacao> avaliacaoOptional = this.avaliacaoRepository.findById(respostaDeAvaliacaoDTO.getAvaliacaoId());
         if (avaliacaoOptional.isPresent()) {
-            ControlePonto controlePonto = this.controlePontoRepository.findFirstByUsuario(this.usuarioService.usuarioAtual().get());
+            ControlePonto controlePonto = this.controlePontoRepository.findFirstByUsuario(UsuarioEscopo.usuarioAtual());
             if (Objects.nonNull(controlePonto) && controlePonto.getPontos().contains(avaliacaoOptional.get().getPonto())) {
                 avaliacaoOptional.get().setResposta(respostaDeAvaliacaoDTO.getResposta());
                 return this.avaliacaoRepository.save(avaliacaoOptional.get());
