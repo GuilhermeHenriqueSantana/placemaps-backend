@@ -42,7 +42,7 @@ public class EventoService {
             }
         } else {
             evento.setPonto(pontoService.obterPontoExistente(pontoId));
-            evento.setLocalizacao(copiar(localizacaoService.obterLocalizacaoPeloIdPonto(pontoId), evento.getInicio()));
+            evento.setLocalizacao(copiar(pontoId, evento.getInicio()));
         }
         return this.eventoRepository.save(evento);
     }
@@ -77,26 +77,9 @@ public class EventoService {
         }
     }
 
-    private Localizacao copiar(List<Localizacao> localizacoes, Date data) {
-        Localizacao localizacao = null;
-        NomeDiaSemana nomeDiaSemana = pegarDiaDaSemana(data);
-        boolean achou = false;
-        int contador1 = 0;
-        while (contador1 < localizacoes.size() && !achou) {
-            int contador2 = 0;
-            Localizacao l = localizacoes.get(contador1);
-            while (contador2 < l.getDiasDaSemana().size() && !achou) {
-                if (l.getDiasDaSemana().get(contador2).getNomeDiaSemana().equals(nomeDiaSemana)) {
-                    localizacao = l;
-                    achou = true;
-                }
-                contador2++;
-            }
-            contador1++;
-        }
-        if (!achou) {
-            throw new EventoBadRequestException("Ponto não possui localização no dia que o evento ira ocorrer.");
-        }
+    private Localizacao copiar(String pontoId, Date data) {
+        NomeDiaSemana nomeDiaSemana = this.pegarDiaDaSemana(data);
+        Localizacao localizacao = this.localizacaoService.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana.toString());
         return Localizacao.builder()
             .pais(localizacao.getPais())
             .estado(localizacao.getEstado())

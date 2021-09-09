@@ -57,12 +57,12 @@ public class LocalizacaoService {
         return localizacaoRepository.save(localizacao);
     }
 
-    public List<Localizacao> obterLocalizacaoPeloIdPonto(String pontoId) {
-        Optional<List<Localizacao>> localizacoesOptional = localizacaoRepository.findByPontoId(pontoId);
-        if (!localizacoesOptional.isPresent()) {
-            throw new LocalizacaoBadRequestException("Nenhuma localização econtrada pelo id do ponto.");
+    public Localizacao obterPorPontoEDiaDaSemana(String pontoId, String nomeDiaSemana) {
+        Optional<Localizacao> localizacaoOptional = localizacaoRepository.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana);
+        if (!localizacaoOptional.isPresent()) {
+            throw new LocalizacaoBadRequestException("Nenhuma localização encontrada nesse dia da semana para esse ponto.");
         }
-        return localizacoesOptional.get();
+        return localizacaoOptional.get();
     }
     
 }
