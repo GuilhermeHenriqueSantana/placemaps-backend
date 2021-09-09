@@ -60,11 +60,11 @@ public class LocalizacaoService {
 
     @Transactional
     public Localizacao obterPorPontoEDiaDaSemana(String pontoId, String nomeDiaSemana) {
-        String localizacaoId = this.localizacaoRepository.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana);
-        if (Objects.isNull(localizacaoId)) {
+        Optional<Localizacao> localizacao = this.localizacaoRepository.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana);
+        if (!localizacao.isPresent()) {
             throw new LocalizacaoBadRequestException("Nenhuma localização encontrada nesse dia da semana para esse ponto.");
         }
-        return this.localizacaoRepository.findById(localizacaoId).get();
+        return localizacao.get();
     }
     
 }

@@ -11,7 +11,7 @@ public interface LocalizacaoRepository extends JpaRepository<Localizacao, String
 
     @Query(nativeQuery = true,
             value = "SELECT " + 
-                    "   l.id " +
+                    "   l.*, lp.ponto_id " +
                     "FROM " +
                     "   localizacao l " +
                     "INNER JOIN localizacao_dia_da_semana ld " +
@@ -24,7 +24,7 @@ public interface LocalizacaoRepository extends JpaRepository<Localizacao, String
                     "   lp.ponto_id = :pontoId " +
                     "   AND d.nome_dia_semana = :nomeDiaSemana " +
                     "LIMIT 1")
-    String obterPorPontoEDiaDaSemana(@Param("pontoId") String pontoId,
+    Optional<Localizacao> obterPorPontoEDiaDaSemana(@Param("pontoId") String pontoId,
                                                     @Param("nomeDiaSemana") String nomeDiaSemana);
     
 }
