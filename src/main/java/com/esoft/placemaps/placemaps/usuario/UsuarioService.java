@@ -26,13 +26,8 @@ public class UsuarioService {
         this.eventoService = eventoService;
     }
 
-    public Optional<Usuario> usuarioAtual() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return usuarioRepository.findByEmail(((User) principal).getUsername());
-    }
-
     public Usuario manterLembrete(String eventoId, Boolean lembrar) {
-        Usuario usuario = usuarioAtual().get();
+        Usuario usuario = UsuarioEscopo.usuarioAtual();
         Evento evento = eventoService.obterEventoExistente(eventoId);
         if (usuario.getEventos().contains(evento)) {
             if (lembrar) {

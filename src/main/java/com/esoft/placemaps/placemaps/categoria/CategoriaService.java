@@ -1,6 +1,10 @@
 package com.esoft.placemaps.placemaps.categoria;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
+
+import com.esoft.placemaps.placemaps.categoria.exception.CategoriaBadRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,14 @@ public class CategoriaService {
     @Transactional
     public Categoria salvar(Categoria categoria) {
         return categoriaRepository.save(categoria);
+    }
+
+    public Categoria obterCategoriaExistente(String categoriaId) {
+        Optional<Categoria> categoriaOptional = categoriaRepository.findById(categoriaId);
+        if (!categoriaOptional.isPresent()) {
+            throw new CategoriaBadRequestException("Categoria não econtrada.");
+        }
+        return categoriaOptional.get();
     }
     
 }

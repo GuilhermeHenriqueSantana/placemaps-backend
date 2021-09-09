@@ -4,7 +4,7 @@ import com.esoft.placemaps.placemaps.comentario.dto.ComentarioFormDTO;
 import com.esoft.placemaps.placemaps.comentario.exception.ComentarioBadRequestException;
 import com.esoft.placemaps.placemaps.ponto.Ponto;
 import com.esoft.placemaps.placemaps.ponto.PontoRepository;
-import com.esoft.placemaps.placemaps.usuario.UsuarioService;
+import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +16,12 @@ public class ComentarioService {
 
     private final ComentarioRepository comentarioRepository;
     private final PontoRepository pontoRepository;
-    private final UsuarioService usuarioService;
 
     @Autowired
     public ComentarioService(ComentarioRepository comentarioRepository,
-                             PontoRepository pontoRepository,
-                             UsuarioService usuarioService) {
+                             PontoRepository pontoRepository) {
         this.comentarioRepository = comentarioRepository;
         this.pontoRepository = pontoRepository;
-        this.usuarioService = usuarioService;
     }
 
     @Transactional
@@ -33,7 +30,7 @@ public class ComentarioService {
         Optional<Ponto> pontoOptional = this.pontoRepository.findById(comentarioFormDTO.getPontoId());
         if (pontoOptional.isPresent()) {
             comentario.setPonto(pontoOptional.get());
-            comentario.setUsuario(this.usuarioService.usuarioAtual().get());
+            comentario.setUsuario(UsuarioEscopo.usuarioAtual());
             return this.comentarioRepository.save(comentario);
         }
         throw new ComentarioBadRequestException("Ponto não encontrado.");

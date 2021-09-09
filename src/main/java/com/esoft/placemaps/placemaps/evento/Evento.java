@@ -33,15 +33,15 @@ public class Evento extends BasicClass {
     @Column(name = "descricao", nullable = false, length = 1000)
     private String descricao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ponto_id")
     private Ponto ponto;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "localizacao_id")
     private Localizacao localizacao;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "contato_id")
     private Contato contato;
 
