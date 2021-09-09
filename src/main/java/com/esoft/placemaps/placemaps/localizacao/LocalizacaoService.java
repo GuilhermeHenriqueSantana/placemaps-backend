@@ -2,6 +2,7 @@ package com.esoft.placemaps.placemaps.localizacao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -57,12 +58,13 @@ public class LocalizacaoService {
         return localizacaoRepository.save(localizacao);
     }
 
+    @Transactional
     public Localizacao obterPorPontoEDiaDaSemana(String pontoId, String nomeDiaSemana) {
-        Optional<Localizacao> localizacaoOptional = localizacaoRepository.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana);
-        if (!localizacaoOptional.isPresent()) {
+        String localizacaoId = this.localizacaoRepository.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana);
+        if (Objects.isNull(localizacaoId)) {
             throw new LocalizacaoBadRequestException("Nenhuma localização encontrada nesse dia da semana para esse ponto.");
         }
-        return localizacaoOptional.get();
+        return this.localizacaoRepository.findById(localizacaoId).get();
     }
     
 }
