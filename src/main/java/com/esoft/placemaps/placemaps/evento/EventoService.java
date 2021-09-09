@@ -3,6 +3,7 @@ package com.esoft.placemaps.placemaps.evento;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -37,8 +38,12 @@ public class EventoService {
     @Transactional
     public Evento salvar(String pontoId, Evento evento) {
         if (pontoId.isEmpty()) {
-            if (evento.getPonto() != null) {
+            if (Objects.nonNull(evento.getPonto())) {
                 throw new EventoBadRequestException("Id do ponto deve ser passado utilizando variavel na url ex: ?pontoId=id");
+            } else {
+                if (Objects.isNull(evento.getLocalizacao())) {
+                    throw new EventoBadRequestException("É necessário informar uma localização.");
+                }
             }
         } else {
             evento.setPonto(pontoService.obterPontoExistente(pontoId));
