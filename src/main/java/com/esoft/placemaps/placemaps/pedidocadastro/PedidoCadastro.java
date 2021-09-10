@@ -7,6 +7,7 @@ import com.esoft.placemaps.helpers.SenhaHelper;
 import com.esoft.placemaps.placemaps.pedidocadastro.exception.PedidoCadastroBadRequestException;
 import com.esoft.placemaps.placemaps.plano.Plano;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
+import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,13 +46,18 @@ public class PedidoCadastro extends BasicClass {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    public void validarPedidoCadastro() {
+    public PedidoCadastro validarPedidoCadastro() {
         if (Objects.isNull(this.numeracaoDocumento) || !DocumentoHelper.documentoValido(this.numeracaoDocumento)) {
             throw new PedidoCadastroBadRequestException("Documento inválido.");
         }
-        if (Objects.isNull(this.usuario)) {
+        if (Objects.isNull(UsuarioEscopo.usuarioAtual())) {
             this.validarPedidoCadastroAnonimo();
+        } else {
+            this.usuario = UsuarioEscopo.usuarioAtual();
+            this.senha = this.usuario.getSenha();
+            this.email = this.usuario.getEmail();
         }
+        return this;
     }
 
     public void validarPedidoCadastroAnonimo() {

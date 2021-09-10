@@ -43,7 +43,10 @@ public class PedidoCadastroService {
         pedidoCadastro.validarPedidoCadastro();
         pedidoCadastro.setPlano(this.planoService.obterPlanoExistente(planoId));
         this.validarEmailExistente(pedidoCadastro);
-        pedidoCadastro.setSenha(this.autenticacaoService.criptografarSenha(pedidoCadastro.getSenha()));
+        this.validarPedidoExistente(pedidoCadastro.getEmail());
+        if (Objects.isNull(pedidoCadastro.getUsuario())) {
+            pedidoCadastro.setSenha(this.autenticacaoService.criptografarSenha(pedidoCadastro.getSenha()));
+        }
         return this.pedidoCadastroRepository.save(pedidoCadastro);
     }
 
@@ -85,6 +88,13 @@ public class PedidoCadastroService {
             if (usuarioOptional.isPresent()) {
                 throw new PedidoCadastroBadRequestException("Email existente.");
             }
+        }
+    }
+
+    public void validarPedidoExistente(String email) {
+        Optional<PedidoCadastro> pedidoCadastro = this.pedidoCadastroRepository.findFirstByEmail(email);
+        if (pedidoCadastro.isPresent()) {
+            throw new PedidoCadastroBadRequestException("Email já cadastrado.");
         }
     }
 
