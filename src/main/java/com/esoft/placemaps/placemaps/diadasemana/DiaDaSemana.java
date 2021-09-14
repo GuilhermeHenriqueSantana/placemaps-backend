@@ -12,6 +12,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,4 +26,25 @@ public class DiaDaSemana extends BasicClass {
     @Enumerated(EnumType.STRING)
     private NomeDiaSemana nomeDiaSemana;
 
+    public NomeDiaSemana pegarDiaDaSemana(Date data) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
+        switch (diaSemana) {
+            case 1:
+                return NomeDiaSemana.DOMINGO;
+            case 2:
+                return NomeDiaSemana.SEGUNDA;
+            case 3:
+                return NomeDiaSemana.TERCA;
+            case 4:
+                return NomeDiaSemana.QUARTA;
+            case 5:
+                return NomeDiaSemana.QUINTA;
+            case 6:
+                return NomeDiaSemana.SEXTA;
+            default:
+                return NomeDiaSemana.SABADO;
+        }
+    }
 }

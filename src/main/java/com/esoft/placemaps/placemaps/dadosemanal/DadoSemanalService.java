@@ -1,6 +1,7 @@
 package com.esoft.placemaps.placemaps.dadosemanal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class DadoSemanalService {
 
         this.dadoSemanalRepository = dadoSemanalRepository;
         this.pontoRepository = pontoRepository;
-        this.diaDaSemanaRepository = diaDaSemanaRepository;                  
+        this.diaDaSemanaRepository = diaDaSemanaRepository;
     }
 
     @Transactional
@@ -56,5 +57,10 @@ public class DadoSemanalService {
         dadoSemanal.setDiasDaSemana(diasDaSemana);
         return dadoSemanalRepository.save(dadoSemanal);
     }
-    
+
+    @Transactional
+    public List<String> obterNomesPorPontoId(String pontoId) {
+        return this.dadoSemanalRepository.obterNomesPorPontoId(pontoId, new DiaDaSemana().pegarDiaDaSemana(new Date()).name());
+    }
+
 }
