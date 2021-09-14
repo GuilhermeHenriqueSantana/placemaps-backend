@@ -21,7 +21,7 @@ public class CategoriaPublicController {
 
     @GetMapping
     public ResponseEntity<List<Categoria>> obterTodas() {
-        return ResponseEntity.ok(categoriaService.obeterTodas());
+        return ResponseEntity.ok(categoriaService.obterTodas());
     }
     
 }

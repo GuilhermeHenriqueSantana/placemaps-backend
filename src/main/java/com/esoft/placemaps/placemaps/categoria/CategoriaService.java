@@ -33,7 +33,7 @@ public class CategoriaService {
         return categoriaOptional.get();
     }
 
-    public List<Categoria> obeterTodas() {
+    public List<Categoria> obterTodas() {
         return categoriaRepository.findAll();
     } 
     
