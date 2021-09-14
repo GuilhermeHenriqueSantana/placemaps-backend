@@ -1,5 +1,6 @@
 package com.esoft.placemaps.placemaps.categoria;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -31,5 +32,9 @@ public class CategoriaService {
         }
         return categoriaOptional.get();
     }
+
+    public List<Categoria> obeterTodas() {
+        return categoriaRepository.findAll();
+    } 
     
 }
