@@ -3,7 +3,8 @@ package com.esoft.placemaps.placemaps.ponto;
 import com.esoft.placemaps.placemaps.categoria.CategoriaService;
 import com.esoft.placemaps.placemaps.controleponto.ControlePonto;
 import com.esoft.placemaps.placemaps.controleponto.ControlePontoRepository;
-import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanalService;
+import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanalRepository;
+import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
 import com.esoft.placemaps.placemaps.ponto.dto.PontoPageDTO;
 import com.esoft.placemaps.placemaps.ponto.exception.PontoBadRequestException;
 import com.esoft.placemaps.placemaps.ponto.projection.PontoPageProjection;
@@ -15,10 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,17 +25,17 @@ public class PontoService {
     private final PontoRepository pontoRepository;
     private final ControlePontoRepository controlePontoRepository;
     private final CategoriaService categoriaService;
-    private final DadoSemanalService dadoSemanalService;
+    private final DadoSemanalRepository dadoSemanalRepository;
 
     @Autowired
     public PontoService(PontoRepository pontoRepository,
                         ControlePontoRepository controlePontoRepository,
                         CategoriaService categoriaService,
-                        DadoSemanalService dadoSemanalService) {
+                        DadoSemanalRepository dadoSemanalRepository) {
         this.pontoRepository = pontoRepository;
         this.controlePontoRepository = controlePontoRepository;
         this.categoriaService = categoriaService;
-        this.dadoSemanalService = dadoSemanalService;
+        this.dadoSemanalRepository = dadoSemanalRepository;
     }
 
     @Transactional
@@ -74,7 +72,8 @@ public class PontoService {
                     .collect(Collectors.toList());
 
             for (PontoPageDTO ponto: collect) {
-                ponto.setDadoSemanalNomeList(this.dadoSemanalService.obterNomesPorPontoId(ponto.getId()));
+                ponto.setDadoSemanalNomeList(this.dadoSemanalRepository.obterNomesPorPontoId(ponto.getId(),
+                        new DiaDaSemana().pegarDiaDaSemana(new Date()).name()));
             }
 
             result = new PageImpl<>(collect, pageable, pontoPageProjectionPage.getTotalElements());
