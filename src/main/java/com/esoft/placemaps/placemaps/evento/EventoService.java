@@ -1,8 +1,6 @@
 package com.esoft.placemaps.placemaps.evento;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -13,7 +11,6 @@ import com.esoft.placemaps.placemaps.diadasemana.NomeDiaSemana;
 import com.esoft.placemaps.placemaps.evento.exception.EventoBadRequestException;
 import com.esoft.placemaps.placemaps.localizacao.Localizacao;
 import com.esoft.placemaps.placemaps.localizacao.LocalizacaoService;
-import com.esoft.placemaps.placemaps.ponto.Ponto;
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,30 +57,8 @@ public class EventoService {
         return eventoOptional.get();
     }
 
-    private NomeDiaSemana pegarDiaDaSemana(Date data) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(data);
-        int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
-        switch (diaSemana) {
-            case 1:
-                return NomeDiaSemana.DOMINGO;
-            case 2:
-                return NomeDiaSemana.SEGUNDA;
-            case 3:
-                return NomeDiaSemana.TERCA;
-            case 4:
-                return NomeDiaSemana.QUARTA;
-            case 5:
-                return NomeDiaSemana.QUINTA;
-            case 6:
-                return NomeDiaSemana.SEXTA;
-            default:
-                return NomeDiaSemana.SABADO;
-        }
-    }
-
     private Localizacao copiar(String pontoId, Date data) {
-        NomeDiaSemana nomeDiaSemana = this.pegarDiaDaSemana(data);
+        NomeDiaSemana nomeDiaSemana = new DiaDaSemana().pegarDiaDaSemana(data);
         Localizacao localizacao = this.localizacaoService.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana.toString());
         return Localizacao.builder()
             .pais(localizacao.getPais())

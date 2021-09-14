@@ -6,7 +6,6 @@ import com.esoft.placemaps.placemaps.avaliacao.exception.AvaliacaoBadRequestExce
 import com.esoft.placemaps.placemaps.controleponto.ControlePonto;
 import com.esoft.placemaps.placemaps.controleponto.ControlePontoRepository;
 import com.esoft.placemaps.placemaps.ponto.Ponto;
-import com.esoft.placemaps.placemaps.ponto.PontoRepository;
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
