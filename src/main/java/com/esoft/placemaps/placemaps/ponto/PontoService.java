@@ -40,14 +40,36 @@ public class PontoService {
 
     @Transactional
     public String salvar(String categoriaId, Ponto ponto) {
-        ControlePonto controlePonto = this.controlePontoRepository.findFirstByUsuario(UsuarioEscopo.usuarioAtual());
-        if (Objects.isNull(controlePonto) || (controlePonto.getPontos().size() >= controlePonto.getPontosAtivos())) {
-            throw new PontoBadRequestException("Sem permissão para cadastrar ponto.");
-        }
         ponto.setCategoria(this.categoriaService.obterCategoriaExistente(categoriaId));
-        controlePonto.getPontos().add(this.pontoRepository.save(ponto));
-        this.controlePontoRepository.save(controlePonto);
-        return "Ok";
+        Boolean edit = this.pontoRepository.findById(ponto.getId()).isPresent();
+        if (!edit) {
+            ControlePonto controlePonto = this.controlePontoRepository.findFirstByUsuario(UsuarioEscopo.usuarioAtual());
+            int pontosAtivos = controlePonto.getPontos().stream().filter(p -> Boolean.TRUE.equals(p.getAtivo())).collect(Collectors.toList()).size();
+            if (Objects.isNull(controlePonto) || (pontosAtivos >= controlePonto.getPontosAtivos())) {
+                throw new PontoBadRequestException("Sem permissão para cadastrar ponto.");
+            }
+            ponto.setAtivo(true);
+            controlePonto.getPontos().add(this.pontoRepository.save(ponto));
+            this.controlePontoRepository.save(controlePonto);
+        } else {
+            this.pontoRepository.save(ponto);
+        }
+        return ponto.getId();
+    }
+
+    @Transactional
+    public String ativarDesativar(String pontoId, Boolean ativar) {
+        Ponto ponto = this.obterPontoExistente(pontoId);
+        if (ativar && !ponto.getAtivo()) {
+            ControlePonto controlePonto = this.controlePontoRepository.findFirstByUsuario(UsuarioEscopo.usuarioAtual());
+            int pontosAtivos = controlePonto.getPontos().stream().filter(p -> Boolean.TRUE.equals(p.getAtivo())).collect(Collectors.toList()).size();
+            if (pontosAtivos >= controlePonto.getPontosAtivos()) {
+                throw new PontoBadRequestException("Quantidade de pontos ativos excede a quantidade permitida.");
+            }
+        }
+        ponto.setAtivo(ativar);
+        this.pontoRepository.save(ponto);
+        return pontoId;
     }
 
     public Ponto obterPontoExistente(String pontoId) {

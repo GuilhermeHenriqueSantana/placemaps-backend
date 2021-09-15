@@ -32,6 +32,9 @@ public class Ponto extends BasicClass {
     @Column(name = "fixo", nullable = false)
     private Boolean fixo;
 
+    @Column(name = "ativo")
+    private Boolean ativo = true;
+
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "contato_id")
     private Contato contato;
