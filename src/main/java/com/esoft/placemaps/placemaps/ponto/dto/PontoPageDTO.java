@@ -13,10 +13,12 @@ public class PontoPageDTO {
   private String nome;
   private String foto;
   private List<String> dadoSemanalNomeList;
+  private Float nota;
 
   public PontoPageDTO(PontoPageProjection pontoPageProjection) {
     this.id = pontoPageProjection.getId();
     this.nome = pontoPageProjection.getNome();
     this.foto = pontoPageProjection.getFoto();
+    this.nota = pontoPageProjection.getNota();
   }
 }
