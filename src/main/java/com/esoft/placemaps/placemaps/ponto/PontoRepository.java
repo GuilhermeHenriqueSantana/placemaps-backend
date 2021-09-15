@@ -23,7 +23,15 @@ public interface PontoRepository extends JpaRepository<Ponto, String> {
                   "       WHERE " +
                   "         pf.ponto_id = p.id " +
                   "       LIMIT 1 " +
-                  "   ) as foto " +
+                  "   ) AS foto," +
+                  "   ( " +
+                  "       SELECT " +
+                  "         CAST((SUM(CAST(a.nota AS FLOAT)) / COUNT(a.nota)) as NUMERIC(3,2)) " +
+                  "       FROM " +
+                  "         avaliacao a " +
+                  "       WHERE " +
+                  "         a.ponto_id = p.id " +
+                  "   ) AS nota " +
                   "FROM " +
                   "   ponto p " +
                   "INNER JOIN categoria c ON " +
@@ -31,7 +39,8 @@ public interface PontoRepository extends JpaRepository<Ponto, String> {
                   "WHERE " +
                   "   p.nome ILIKE CONCAT('%',:nome,'%') " +
                   "   AND c.nome ILIKE CONCAT ('%',:categoria,'%') " +
-                  "   AND p.ativo IS TRUE ",
+                  "   AND p.ativo IS TRUE " +
+                  "   ORDER BY p.id ",
           countQuery = "SELECT " +
                   "   COUNT(DISTINCT p.id) " +
                   "FROM " +
@@ -42,7 +51,7 @@ public interface PontoRepository extends JpaRepository<Ponto, String> {
                   "   p.nome ILIKE CONCAT('%',:nome,'%') " +
                   "   AND c.nome ILIKE CONCAT('%',:categoria,'%') " +
                   "   AND p.ativo IS TRUE ")
-  Page<PontoPageProjection> pontoPorNomeECategoria(Pageable pageable,
+  Page<PontoPageProjection> pontosPorNomeECategoria(Pageable pageable,
                                                    @Param("nome") String nome,
                                                    @Param("categoria") String categoria);
 

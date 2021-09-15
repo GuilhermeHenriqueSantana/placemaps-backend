@@ -19,10 +19,10 @@ public class PontoPublicController {
   }
 
   @GetMapping
-  public ResponseEntity<Page<PontoPageDTO>> salvar(Pageable pageable,
+  public ResponseEntity<Page<PontoPageDTO>> pontosPorNomeECategoria(Pageable pageable,
                                                    @RequestParam(value = "categoria", required = false, defaultValue = "") String categoria,
                                                    @RequestParam(value = "nome", required = false, defaultValue = "") String nome) {
-    return ResponseEntity.ok(this.pontoService.pontoPorNomeECategoria(pageable, nome, categoria));
+    return ResponseEntity.ok(this.pontoService.pontosPorNomeECategoria(pageable, nome, categoria));
   }
 
 }

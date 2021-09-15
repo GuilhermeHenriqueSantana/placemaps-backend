@@ -81,10 +81,10 @@ public class PontoService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PontoPageDTO> pontoPorNomeECategoria(Pageable pageable, String nome, String categoria) {
+    public Page<PontoPageDTO> pontosPorNomeECategoria(Pageable pageable, String nome, String categoria) {
         Page<PontoPageDTO> result = new PageImpl<>(new ArrayList<>(), pageable, 0);
 
-        Page<PontoPageProjection> pontoPageProjectionPage = this.pontoRepository.pontoPorNomeECategoria(pageable, nome, categoria);
+        Page<PontoPageProjection> pontoPageProjectionPage = this.pontoRepository.pontosPorNomeECategoria(pageable, nome, categoria);
 
         if(pontoPageProjectionPage.getTotalElements() > 0) {
             List<PontoPageDTO> collect = pontoPageProjectionPage.getContent()
