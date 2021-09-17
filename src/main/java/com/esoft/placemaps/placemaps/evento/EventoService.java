@@ -1,6 +1,7 @@
 package com.esoft.placemaps.placemaps.evento;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
 import com.esoft.placemaps.placemaps.diadasemana.NomeDiaSemana;
 import com.esoft.placemaps.placemaps.evento.exception.EventoBadRequestException;
 import com.esoft.placemaps.placemaps.localizacao.Localizacao;
+import com.esoft.placemaps.placemaps.localizacao.LocalizacaoRepository;
 import com.esoft.placemaps.placemaps.localizacao.LocalizacaoService;
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 
@@ -21,14 +23,14 @@ public class EventoService {
 
     private final EventoRepository eventoRepository;
 
-    private final LocalizacaoService localizacaoService;
+    private final LocalizacaoRepository localizacaoRepository;
 
     private final PontoService pontoService;
 
     @Autowired
-    public EventoService(EventoRepository eventoRepository, LocalizacaoService localizacaoService, PontoService pontoService) {
+    public EventoService(EventoRepository eventoRepository, LocalizacaoRepository localizacaoRepository, PontoService pontoService) {
         this.eventoRepository = eventoRepository;
-        this.localizacaoService = localizacaoService;
+        this.localizacaoRepository = localizacaoRepository;
         this.pontoService = pontoService;
     }
 
@@ -50,16 +52,28 @@ public class EventoService {
     }
 
     public Evento obterEventoExistente(String eventoId) {
-        Optional<Evento> eventoOptional = eventoRepository.findById(eventoId);
+        Optional<Evento> eventoOptional = this.eventoRepository.findById(eventoId);
         if (!eventoOptional.isPresent()) {
             throw new EventoBadRequestException("Evento não econtrado.");
         }
         return eventoOptional.get();
     }
 
+    public Evento obterEventoExistentePelaLocalizacaoId(String localizacaoId) {
+        Optional<Evento> eventoOptional = this.eventoRepository.findByLocalizacaoId(localizacaoId);
+        if (!eventoOptional.isPresent()) {
+            throw new EventoBadRequestException("Evento não econtrado.");
+        }
+        return eventoOptional.get();
+    }
+
+    public List<Evento> obterEventosExistentesPeloPontoId(String pontoId) {  
+        return this.eventoRepository.findByPontoId(pontoId);
+    }
+
     private Localizacao copiar(String pontoId, Date data) {
         NomeDiaSemana nomeDiaSemana = new DiaDaSemana().pegarDiaDaSemana(data);
-        Localizacao localizacao = this.localizacaoService.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana.toString());
+        Localizacao localizacao = this.obterLocalizacaoPeloPontoEDiaDaSemana(pontoId, nomeDiaSemana.toString());
         return Localizacao.builder()
             .pais(localizacao.getPais())
             .estado(localizacao.getEstado())
@@ -70,6 +84,14 @@ public class EventoService {
             .longitude(localizacao.getLongitude())
             .latitude(localizacao.getLatitude())
             .build();
+    }
+
+    public Localizacao obterLocalizacaoPeloPontoEDiaDaSemana(String pontoId, String nomeDiaSemana) {
+        Optional<Localizacao> localizacao = this.localizacaoRepository.obterPorPontoEDiaDaSemana(pontoId, nomeDiaSemana);
+        if (!localizacao.isPresent()) {
+            throw new EventoBadRequestException("Nenhuma localização encontrada nesse dia da semana para esse ponto.");
+        }
+        return localizacao.get();
     }
     
 }
