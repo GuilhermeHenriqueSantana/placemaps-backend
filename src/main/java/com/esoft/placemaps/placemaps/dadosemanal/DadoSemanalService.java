@@ -1,9 +1,6 @@
 package com.esoft.placemaps.placemaps.dadosemanal;
 
-import java.util.Date;
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalFormDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.exception.DadoSemanalBadRequestException;
@@ -12,7 +9,10 @@ import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemanaRepository;
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DadoSemanalService {
@@ -41,12 +41,12 @@ public class DadoSemanalService {
             throw new DadoSemanalBadRequestException("Algum(ns) DiaDaSemana não foi encontrado.");
         }
         dadoSemanal.setDiasDaSemana(diasDaSemana);
-        return dadoSemanalRepository.save(dadoSemanal);
+        return this.dadoSemanalRepository.save(dadoSemanal);
     }
 
-    @Transactional
-    public List<String> obterNomesPorPontoId(String pontoId) {
-        return this.dadoSemanalRepository.obterNomesPorPontoId(pontoId, new DiaDaSemana().pegarDiaDaSemana(new Date()).name());
+    @Transactional(readOnly = true)
+    public Page<DadoSemanal> obterDadosPorPontoId(Pageable pageable, String pontoId) {
+        return this.dadoSemanalRepository.findDadoSemanalsByPontoId(pageable, pontoId);
     }
 
 }

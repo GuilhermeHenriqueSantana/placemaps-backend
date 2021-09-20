@@ -1,5 +1,7 @@
 package com.esoft.placemaps.placemaps.dadosemanal;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +24,6 @@ public interface DadoSemanalRepository extends JpaRepository<DadoSemanal, String
                   "   AND ds.nome_dia_semana = :nomeDiaSemana ")
   List<String> obterNomesPorPontoId(@Param("pontoId") String pontoId,
                                     @Param("nomeDiaSemana") String nomeDiaSemana);
+
+  Page<DadoSemanal> findDadoSemanalsByPontoId(Pageable pageable, String pontoId);
 }
