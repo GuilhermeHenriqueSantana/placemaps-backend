@@ -25,4 +25,9 @@ public class PontoPublicController {
     return ResponseEntity.ok(this.pontoService.pontosPorNomeECategoria(pageable, nome, categoria));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Ponto> obterPontoExistente(@PathVariable String id) {
+    return ResponseEntity.ok(this.pontoService.obterPontoExistente(id));
+  }
+
 }
