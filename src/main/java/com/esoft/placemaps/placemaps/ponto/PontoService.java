@@ -4,14 +4,10 @@ import com.esoft.placemaps.placemaps.categoria.CategoriaService;
 import com.esoft.placemaps.placemaps.controleponto.ControlePonto;
 import com.esoft.placemaps.placemaps.controleponto.ControlePontoRepository;
 import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanalRepository;
-import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
-import com.esoft.placemaps.placemaps.ponto.dto.PontoPageDTO;
 import com.esoft.placemaps.placemaps.ponto.exception.PontoBadRequestException;
-import com.esoft.placemaps.placemaps.ponto.projection.PontoPageProjection;
 import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,27 +77,8 @@ public class PontoService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PontoPageDTO> pontosPorNomeECategoria(Pageable pageable, String nome, String categoria) {
-        Page<PontoPageDTO> result = new PageImpl<>(new ArrayList<>(), pageable, 0);
-
-        Page<PontoPageProjection> pontoPageProjectionPage = this.pontoRepository.pontosPorNomeECategoria(pageable, nome, categoria);
-
-        if(pontoPageProjectionPage.getTotalElements() > 0) {
-            List<PontoPageDTO> collect = pontoPageProjectionPage.getContent()
-                    .stream()
-                    .map(PontoPageDTO::new)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-
-            for (PontoPageDTO ponto: collect) {
-                ponto.setDadoSemanalNomeList(this.dadoSemanalRepository.obterNomesPorPontoId(ponto.getId(),
-                        new DiaDaSemana().pegarDiaDaSemana(new Date()).name()));
-            }
-
-            result = new PageImpl<>(collect, pageable, pontoPageProjectionPage.getTotalElements());
-        }
-
-        return result;
+    public Page<Map<String, Object>> pontosPorNomeECategoria(Pageable pageable, String nome, String categoria) {
+        return this.pontoRepository.pontosPorNomeECategoria(pageable, nome, categoria);
     }
     
 }

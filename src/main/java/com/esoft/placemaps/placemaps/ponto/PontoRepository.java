@@ -1,11 +1,12 @@
 package com.esoft.placemaps.placemaps.ponto;
 
-import com.esoft.placemaps.placemaps.ponto.projection.PontoPageProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.Map;
 
 public interface PontoRepository extends JpaRepository<Ponto, String> {
 
@@ -23,7 +24,7 @@ public interface PontoRepository extends JpaRepository<Ponto, String> {
                   "       WHERE " +
                   "         pf.ponto_id = p.id " +
                   "       LIMIT 1 " +
-                  "   ) AS foto," +
+                  "   ) AS foto, " +
                   "   ( " +
                   "       SELECT " +
                   "         CAST((SUM(CAST(a.nota AS FLOAT)) / COUNT(a.nota)) as NUMERIC(3,2)) " +
@@ -51,8 +52,8 @@ public interface PontoRepository extends JpaRepository<Ponto, String> {
                   "   p.nome ILIKE CONCAT('%',:nome,'%') " +
                   "   AND c.nome ILIKE CONCAT('%',:categoria,'%') " +
                   "   AND p.ativo IS TRUE ")
-  Page<PontoPageProjection> pontosPorNomeECategoria(Pageable pageable,
-                                                   @Param("nome") String nome,
-                                                   @Param("categoria") String categoria);
+  Page<Map<String, Object>> pontosPorNomeECategoria(Pageable pageable,
+                                                    @Param("nome") String nome,
+                                                    @Param("categoria") String categoria);
 
 }

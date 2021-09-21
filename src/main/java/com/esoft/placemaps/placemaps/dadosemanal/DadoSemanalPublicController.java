@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/public/dadosemanal")
 public class DadoSemanalPublicController {
@@ -18,8 +20,8 @@ public class DadoSemanalPublicController {
   }
 
   @GetMapping("/obter-pelo-ponto/{pontoId}")
-  public ResponseEntity<Page<DadoSemanal>> obterDadosPorPontoId(Pageable pageable,
-                                                                @PathVariable String pontoId) {
+  public ResponseEntity<Page<Map<String, Object>>> obterDadosPorPontoId(Pageable pageable,
+                                                                        @PathVariable String pontoId) {
     return ResponseEntity.ok(this.dadoSemanalService.obterDadosPorPontoId(pageable, pontoId));
   }
 
