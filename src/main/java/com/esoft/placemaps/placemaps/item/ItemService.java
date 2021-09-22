@@ -1,6 +1,11 @@
 package com.esoft.placemaps.placemaps.item;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +15,9 @@ import com.esoft.placemaps.placemaps.item.dto.ItemFormDTO;
 import com.esoft.placemaps.placemaps.item.exception.ItemBadRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +42,10 @@ public class ItemService {
             return itemRepository.save(item);
         }
         throw new ItemBadRequestException("DadoSemanal não encontrado.");
+    }
+
+    public Page<Map<String, Object>> pegarItensPeloDadoSemanal(Pageable pageable, String dadoSemanalId) {
+        return this.itemRepository.findByDadoSemanalId(pageable, dadoSemanalId);
     }
     
 }
