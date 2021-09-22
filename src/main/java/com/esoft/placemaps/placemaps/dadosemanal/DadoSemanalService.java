@@ -1,6 +1,7 @@
 package com.esoft.placemaps.placemaps.dadosemanal;
 
 import java.util.List;
+import java.util.Map;
 
 import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalFormDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.exception.DadoSemanalBadRequestException;
@@ -45,7 +46,7 @@ public class DadoSemanalService {
     }
 
     @Transactional(readOnly = true)
-    public Page<DadoSemanal> obterDadosPorPontoId(Pageable pageable, String pontoId) {
+    public Page<Map<String, Object>> obterDadosPorPontoId(Pageable pageable, String pontoId) {
         return this.dadoSemanalRepository.findDadoSemanalsByPontoId(pageable, pontoId);
     }
 
