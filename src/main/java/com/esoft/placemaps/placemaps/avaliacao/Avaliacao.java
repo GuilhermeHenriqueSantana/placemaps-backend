@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,6 +26,9 @@ public class Avaliacao extends BasicClass {
 
     @Column(name = "descricao", length = 1000)
     private String descricao;
+
+    @Column(name = "data")
+    private Date data;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)

@@ -3,6 +3,8 @@ package com.esoft.placemaps.placemaps.avaliacao.dto;
 import com.esoft.placemaps.placemaps.avaliacao.Avaliacao;
 import lombok.Getter;
 
+import java.util.Date;
+
 @Getter
 public class AvaliacaoFormDTO {
 
@@ -14,6 +16,7 @@ public class AvaliacaoFormDTO {
         return new Avaliacao().builder()
                 .nota(this.nota)
                 .descricao(this.descricao)
+                .data(new Date())
                 .build();
     }
 
