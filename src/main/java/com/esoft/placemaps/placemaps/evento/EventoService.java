@@ -13,6 +13,8 @@ import com.esoft.placemaps.placemaps.localizacao.LocalizacaoRepository;
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +92,11 @@ public class EventoService {
             throw new EventoBadRequestException("Nenhuma localização encontrada nesse dia da semana para esse ponto.");
         }
         return localizacao.get();
+    }
+
+    public Page<Evento> obterEventos(Pageable pageable,
+                                     String nome) {
+        return this.eventoRepository.findAllByNomeContains(pageable, nome);
     }
     
 }
