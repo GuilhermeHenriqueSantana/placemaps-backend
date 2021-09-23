@@ -6,9 +6,12 @@ import com.esoft.placemaps.placemaps.resposta.dto.RespostaFormDTO;
 import com.esoft.placemaps.placemaps.resposta.exception.RespostaBadRequestException;
 import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -34,6 +37,12 @@ public class RespostaService {
             return this.respostaRepository.save(resposta);
         }
         throw new RespostaBadRequestException("Comentário não encontrado.");
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Map<String, Object>> obterRespostasPeloComentarioId(Pageable pageable,
+                                                                    String comentarioId) {
+        return this.respostaRepository.obterRespostasPeloPonto(pageable, comentarioId);
     }
 
 }
