@@ -10,9 +10,12 @@ import com.esoft.placemaps.placemaps.ponto.PontoService;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -66,6 +69,12 @@ public class AvaliacaoService {
             throw new AvaliacaoBadRequestException("Apenas o proprietário pode responder uma avaliação.");
         }
         throw new AvaliacaoBadRequestException("Avaliação não encontrada.");
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Map<String, Object>> obterAvaliacoesPeloPonto(Pageable pageable,
+                                                              String pontoId) {
+        return this.avaliacaoRepository.obterAvaliacoesPeloPonto(pageable, pontoId);
     }
 
 }
