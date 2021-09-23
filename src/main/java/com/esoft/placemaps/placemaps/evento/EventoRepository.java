@@ -20,7 +20,13 @@ public interface EventoRepository extends JpaRepository<Evento, String> {
                     "FROM " +
                     "   evento e " +
                     "WHERE " +
-                    "   e.nome ILIKE CONCAT('%', :nome, '%')")
+                    "   e.nome ILIKE CONCAT('%', :nome, '%')",
+            countQuery = "SELECT " +
+                    "           COUNT(DISTINCT e.id) " +
+                    "       FROM " +
+                    "           evento e " +
+                    "       WHERE " +
+                    "           e.nome ILIKE CONCAT('%', :nome, '%') ")
     Page<Evento> findAllByNomeContains(Pageable pageable,
-                                         String nome);
+                                       String nome);
 }
