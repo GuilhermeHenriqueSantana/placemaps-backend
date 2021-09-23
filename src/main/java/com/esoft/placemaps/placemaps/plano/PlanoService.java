@@ -2,6 +2,8 @@ package com.esoft.placemaps.placemaps.plano;
 
 import com.esoft.placemaps.placemaps.plano.exception.PlanoBadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,10 @@ public class PlanoService {
             throw new PlanoBadRequestException("Plano não encontrado.");
         }
         return planoOptional.get();
+    }
+
+    public Page<Plano> pegarPlanos(Pageable pageable) {
+        return planoRepository.findAll(pageable);
     }
 
 }
