@@ -1,12 +1,10 @@
 package com.esoft.placemaps.placemaps.usuario;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
-import com.esoft.placemaps.helpers.DocumentoHelper;
 import com.esoft.placemaps.helpers.EmailHelper;
 import com.esoft.placemaps.helpers.SenhaHelper;
 import com.esoft.placemaps.placemaps.evento.Evento;
 import com.esoft.placemaps.placemaps.foto.Foto;
-import com.esoft.placemaps.placemaps.pedidocadastro.exception.PedidoCadastroBadRequestException;
 import com.esoft.placemaps.placemaps.usuario.exception.UsuarioBadRequestException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

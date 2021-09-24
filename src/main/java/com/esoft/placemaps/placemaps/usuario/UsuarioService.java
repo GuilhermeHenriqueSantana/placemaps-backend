@@ -1,19 +1,13 @@
 package com.esoft.placemaps.placemaps.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.esoft.placemaps.placemaps.evento.Evento;
-import com.esoft.placemaps.placemaps.evento.EventoRepository;
 import com.esoft.placemaps.placemaps.evento.EventoService;
-import com.esoft.placemaps.placemaps.usuario.exception.UsuarioBadRequestException;
 
 @Service
 public class UsuarioService {
