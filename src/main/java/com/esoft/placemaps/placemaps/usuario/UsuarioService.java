@@ -5,8 +5,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.esoft.placemaps.placemaps.evento.Evento;
 import com.esoft.placemaps.placemaps.evento.EventoRepository;
@@ -26,14 +28,15 @@ public class UsuarioService {
         this.eventoService = eventoService;
     }
 
+    @Transactional
     public Usuario manterLembrete(String eventoId, Boolean lembrar) {
         Usuario usuario = UsuarioEscopo.usuarioAtual();
         Evento evento = eventoService.obterEventoExistente(eventoId);
-        if (usuario.getEventos().contains(evento)) {
+        if (usuario.getEventos().stream().filter(e -> e.getId().equals(evento.getId())).findFirst().isPresent()) {
             if (lembrar) {
                 return usuario;
             }
-            usuario.getEventos().remove(evento);
+            usuario.setEventos(usuario.getEventos().stream().filter(e -> !e.getId().equals(evento.getId())).collect(Collectors.toList()));
             return usuarioRepository.save(usuario);
         }
         if (lembrar) {
