@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -44,6 +45,11 @@ public class ControlePontoService {
             return "OK";
         }
         throw new ControlePontoBadRequestException("Controle de ponto não encontrado.");
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> obterPeloProprietario() {
+        return this.controlePontoRepository.obterPeloProprietario(UsuarioEscopo.usuarioAtual().getId());
     }
 
 }
