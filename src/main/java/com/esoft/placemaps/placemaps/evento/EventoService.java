@@ -2,6 +2,7 @@ package com.esoft.placemaps.placemaps.evento;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import com.esoft.placemaps.placemaps.evento.exception.EventoBadRequestException;
 import com.esoft.placemaps.placemaps.localizacao.Localizacao;
 import com.esoft.placemaps.placemaps.localizacao.LocalizacaoRepository;
 import com.esoft.placemaps.placemaps.ponto.PontoService;
+import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -97,6 +99,10 @@ public class EventoService {
     public Page<Evento> obterEventos(Pageable pageable,
                                      String nome) {
         return this.eventoRepository.findAllByNomeContains(pageable, nome);
+    }
+
+    public Page<Map<String, Object>> obterEventosDefinidoComoLembrete(Pageable pageable) {
+        return this.eventoRepository.obterEventosDefinidoComoLembrete(pageable, UsuarioEscopo.usuarioAtual().getId());
     }
     
 }
