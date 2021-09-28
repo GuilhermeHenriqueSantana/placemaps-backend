@@ -23,11 +23,10 @@ public class Resposta extends BasicClass {
     @Column(name = "data")
     private Date date;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @Lazy
     @ManyToOne
     @JoinColumn(name = "comentario_id", nullable = false)
     private Comentario comentario;

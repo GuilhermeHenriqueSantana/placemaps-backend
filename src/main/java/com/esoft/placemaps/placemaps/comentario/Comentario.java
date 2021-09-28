@@ -23,11 +23,10 @@ public class Comentario extends BasicClass {
     @Column(name = "data")
     private Date data = new Date();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @Lazy
     @ManyToOne
     @JoinColumn(name = "ponto_id", nullable = false)
     private Ponto ponto;

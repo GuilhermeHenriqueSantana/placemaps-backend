@@ -13,10 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -38,7 +35,7 @@ public class PedidoCadastro extends BasicClass {
     @Column(name = "numeracao_documento", nullable = false, length = 14)
     private String numeracaoDocumento;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "plano_id", nullable = false)
     private Plano plano;
 

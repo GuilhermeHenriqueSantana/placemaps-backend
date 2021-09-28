@@ -27,11 +27,7 @@ public class ControlePonto extends BasicClass {
     private Usuario usuario;
 
     @OneToMany
-    @JoinTable(
-            name = "controle_ponto_ponto",
-            joinColumns = @JoinColumn(name = "controle_ponto_id"),
-            inverseJoinColumns = @JoinColumn(name = "ponto_id")
-    )
+    @JoinColumn(name = "controle_ponto_id", nullable = false)
     private List<Ponto> pontos;
 
 }

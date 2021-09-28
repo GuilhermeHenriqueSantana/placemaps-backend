@@ -34,7 +34,6 @@ public class Avaliacao extends BasicClass {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @Lazy
     @ManyToOne
     @JoinColumn(name = "ponto_id", nullable = false)
     private Ponto ponto;
