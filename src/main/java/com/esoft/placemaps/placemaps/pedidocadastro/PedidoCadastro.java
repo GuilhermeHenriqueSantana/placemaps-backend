@@ -53,6 +53,7 @@ public class PedidoCadastro extends BasicClass {
             this.usuario = UsuarioEscopo.usuarioAtual();
             this.senha = this.usuario.getSenha();
             this.email = this.usuario.getEmail();
+            this.nome = this.usuario.getNome();
         }
         return this;
     }
