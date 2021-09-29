@@ -1,6 +1,8 @@
 package com.esoft.placemaps.placemaps.controleponto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,5 +37,10 @@ public class ControlePontoController {
     @GetMapping
     public ResponseEntity<Map<String, Object>> obterPeloProprietario() {
         return ResponseEntity.ok(this.controlePontoService.obterPeloProprietario());
+    }
+
+    @GetMapping("/solicitados")
+    public ResponseEntity<Page<Map<String, Object>>> obterControlesPontoSolicitados(Pageable pageable) {
+        return ResponseEntity.ok(this.controlePontoService.obterControlesPontoSolicitados(pageable));
     }
 }
