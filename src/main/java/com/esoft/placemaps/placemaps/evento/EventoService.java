@@ -53,6 +53,11 @@ public class EventoService {
         return this.eventoRepository.save(evento);
     }
 
+    @Transactional(readOnly = true)
+    public Evento obterEventoPorId(String id) {
+        return this.eventoRepository.findById(id).orElse(null);
+    }
+
     public Evento obterEventoExistente(String eventoId) {
         Optional<Evento> eventoOptional = this.eventoRepository.findById(eventoId);
         if (!eventoOptional.isPresent()) {
