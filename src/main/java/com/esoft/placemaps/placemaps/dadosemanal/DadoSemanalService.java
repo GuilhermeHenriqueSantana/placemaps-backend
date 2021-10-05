@@ -50,4 +50,9 @@ public class DadoSemanalService {
         return this.dadoSemanalRepository.findDadoSemanalsByPontoId(pageable, pontoId);
     }
 
+    @Transactional(readOnly = true)
+    public DadoSemanal obterDadoSemanalPeloId(String id) {
+        return this.dadoSemanalRepository.findById(id).orElse(null);
+    }
+
 }

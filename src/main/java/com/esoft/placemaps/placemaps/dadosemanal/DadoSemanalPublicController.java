@@ -25,4 +25,9 @@ public class DadoSemanalPublicController {
     return ResponseEntity.ok(this.dadoSemanalService.obterDadosPorPontoId(pageable, pontoId));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<DadoSemanal> obterDadoSemanalPeloId(@PathVariable String id) {
+    return ResponseEntity.ok(this.dadoSemanalService.obterDadoSemanalPeloId(id));
+  }
+
 }
