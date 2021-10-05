@@ -80,5 +80,13 @@ public class PontoService {
     public Page<Map<String, Object>> pontosPorNomeECategoria(Pageable pageable, String nome, String categoria) {
         return this.pontoRepository.pontosPorNomeECategoria(pageable, nome, categoria);
     }
+
+    @Transactional(readOnly = true)
+    public Page<Map<String, Object>> pontosPorNomeCategoriaProprietario(Pageable pageable, String nome, String categoria) {
+        return this.pontoRepository.pontosPorNomeCategoriaControle(pageable,
+                nome,
+                categoria,
+                controlePontoRepository.findFirstByUsuario(UsuarioEscopo.usuarioAtual()).getId());
+    }
     
 }
