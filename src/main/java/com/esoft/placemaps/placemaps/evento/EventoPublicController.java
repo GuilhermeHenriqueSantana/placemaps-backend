@@ -23,4 +23,9 @@ public class EventoPublicController {
     return ResponseEntity.ok(this.eventoService.obterEventos(pageable, nome));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Evento> obterEventoPorId(@PathVariable String id) {
+    return ResponseEntity.ok(this.eventoService.obterEventoPorId(id));
+  }
+
 }
