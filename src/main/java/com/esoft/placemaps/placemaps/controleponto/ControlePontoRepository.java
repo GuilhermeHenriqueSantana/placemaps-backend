@@ -36,7 +36,7 @@ public interface ControlePontoRepository extends JpaRepository<ControlePonto, St
                     "FROM " +
                         "controle_ponto c " +
                     "INNER JOIN usuario u ON " +
-                        "u.id = c.usuario_id" +
+                        "u.id = c.usuario_id " +
                     "WHERE " + 
                         "c.pontos_ativos <> c.pontos_solicitados",
             countQuery = "SELECT " +
@@ -44,7 +44,7 @@ public interface ControlePontoRepository extends JpaRepository<ControlePonto, St
                          "FROM " +
                             "controle_ponto c " +
                          "INNER JOIN usuario u ON " +
-                            "u.id = c.usuario_id" +
+                            "u.id = c.usuario_id " +
                          "WHERE " + 
                             "c.pontos_ativos <> c.pontos_solicitados")
     Page<Map<String, Object>> obterControlesPontoSolicitados(Pageable pageable);
