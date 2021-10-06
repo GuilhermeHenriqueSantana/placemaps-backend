@@ -4,6 +4,8 @@ import com.esoft.placemaps.placemaps.controleponto.exception.ControlePontoBadReq
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +52,10 @@ public class ControlePontoService {
     @Transactional(readOnly = true)
     public Map<String, Object> obterPeloProprietario() {
         return this.controlePontoRepository.obterPeloProprietario(UsuarioEscopo.usuarioAtual().getId());
+    }
+
+    public Page<Map<String, Object>> obterControlesPontoSolicitados(Pageable pageable) {
+        return this.controlePontoRepository.obterControlesPontoSolicitados(pageable);
     }
 
 }

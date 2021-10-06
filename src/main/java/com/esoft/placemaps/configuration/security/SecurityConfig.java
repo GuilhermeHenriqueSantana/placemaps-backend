@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and();
 
         http.authorizeRequests().antMatchers("/api/categoria").hasAnyAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/api/controleponto/solicitados").hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/api/controleponto/aceitar-solicitacao-pontos/**").hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/api/controleponto/negar-solicitacao-pontos/**").hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/api/pedidocadastro/aceitar-pedido").hasAnyAuthority("ADMIN");
