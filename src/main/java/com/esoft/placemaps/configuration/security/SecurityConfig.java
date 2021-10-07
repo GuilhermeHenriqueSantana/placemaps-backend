@@ -65,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/usuario/lembrar-evento/**").hasAnyAuthority("PROPRIETARIO", "USUARIO");
         http.authorizeRequests().antMatchers("/api/usuario/esquecer-evento/**").hasAnyAuthority("PROPRIETARIO", "USUARIO");
         http.authorizeRequests().antMatchers("/api/evento/lembretes").hasAnyAuthority("PROPRIETARIO", "USUARIO");
+        http.authorizeRequests().antMatchers("/api/opiniao").hasAnyAuthority("PROPRIETARIO", "USUARIO");
 
         http.authorizeRequests()
                 .antMatchers("/swagger-ui.html/**").permitAll()
