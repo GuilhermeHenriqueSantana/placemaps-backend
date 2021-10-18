@@ -20,5 +20,4 @@ public interface MensagemRepository extends JpaRepository<Mensagem, String> {
                   "   mensagem p ")
   Page<Mensagem> getPageOrderByDateDesc(Pageable pageable);
 
-
 }
