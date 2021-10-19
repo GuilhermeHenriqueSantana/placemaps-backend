@@ -25,4 +25,9 @@ public class RespostaPublicController {
     return ResponseEntity.ok(this.respostaService.obterRespostasPeloComentarioId(pageable, comentarioId));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Resposta> obterRespostaPeloId(@PathVariable String id) {
+    return ResponseEntity.ok(this.respostaService.obterRespostaPeloId(id));
+  }
+
 }
