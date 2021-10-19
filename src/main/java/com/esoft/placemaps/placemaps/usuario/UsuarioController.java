@@ -1,11 +1,9 @@
 package com.esoft.placemaps.placemaps.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -29,5 +27,10 @@ public class UsuarioController {
         usuarioService.manterLembrete(eventoId, false);
         return ResponseEntity.ok("Ok");
     }
-    
+
+    @PutMapping("/atualizar-documento")
+    public ResponseEntity atualizarDocumento(@RequestParam(value = "documento") String documento) {
+        this.usuarioService.atualizarDocumento(documento);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
 }

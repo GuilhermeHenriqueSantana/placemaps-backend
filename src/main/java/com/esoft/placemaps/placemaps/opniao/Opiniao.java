@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "opniao")
+@Entity(name = "opiniao")
 public class Opiniao extends BasicClass {
 
     @Column(name = "descricao")

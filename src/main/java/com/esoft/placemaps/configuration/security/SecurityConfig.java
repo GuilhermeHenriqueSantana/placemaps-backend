@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/controleponto/negar-solicitacao-pontos/**").hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/api/pedidocadastro/aceitar-pedido").hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/api/plano").hasAnyAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/api/mensagem").hasAnyAuthority("ADMIN");
 
         http.authorizeRequests().antMatchers("/api/avaliacao/responder-avaliacao").hasAnyAuthority("PROPRIETARIO");
         http.authorizeRequests().antMatchers("/api/controleponto/solicitar-pontos/**").hasAnyAuthority("PROPRIETARIO");
@@ -58,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/ponto/desativar/**").hasAnyAuthority("PROPRIETARIO");
         http.authorizeRequests().antMatchers("/api/ponto/obter-pelo-proprietario").hasAnyAuthority("PROPRIETARIO");
         http.authorizeRequests().antMatchers("/api/evento").hasAnyAuthority("PROPRIETARIO");
+        http.authorizeRequests().antMatchers("/api/usuario/atualizar-documento").hasAnyAuthority("PROPRIETARIO");
 
         http.authorizeRequests().antMatchers("/api/avaliacao").hasAnyAuthority("PROPRIETARIO", "USUARIO");
         http.authorizeRequests().antMatchers("/api/comentario").hasAnyAuthority("PROPRIETARIO", "USUARIO");
