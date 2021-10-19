@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanal;
 import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanalRepository;
+import com.esoft.placemaps.placemaps.item.dto.ItemAtualizarDTO;
 import com.esoft.placemaps.placemaps.item.dto.ItemFormDTO;
 import com.esoft.placemaps.placemaps.item.exception.ItemBadRequestException;
 
@@ -37,6 +38,15 @@ public class ItemService {
             return itemRepository.save(item);
         }
         throw new ItemBadRequestException("DadoSemanal não encontrado.");
+    }
+
+    @Transactional
+    public Item atualizar(String id, ItemAtualizarDTO itemAtualizarDTO) {
+        Optional<Item> itemOptional = itemRepository.findById(id);
+        if (!itemOptional.isPresent()) {
+            throw new ItemBadRequestException("Item não encontrado.");
+        }
+        return itemRepository.save(itemAtualizarDTO.atualizarItem(itemOptional.get()));
     }
 
     public Page<Map<String, Object>> pegarItensPeloDadoSemanal(Pageable pageable, String dadoSemanalId) {
