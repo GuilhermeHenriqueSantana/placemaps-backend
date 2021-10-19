@@ -15,7 +15,7 @@ public interface OpiniaoRepository extends JpaRepository<Opiniao, String> {
                   "ORDER BY " +
                   "   p.data DESC ",
           countQuery = "SELECT " +
-                  "   * " +
+                  "   COUNT(*) " +
                   "FROM " +
                   "   opiniao p ")
   Page<Opiniao> getPageOrderByDateDesc(Pageable pageable);
