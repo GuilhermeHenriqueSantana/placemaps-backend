@@ -1,5 +1,7 @@
 package com.esoft.placemaps.placemaps.usuario;
 
+import com.esoft.placemaps.helpers.DocumentoHelper;
+import com.esoft.placemaps.placemaps.usuario.exception.UsuarioBadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,16 @@ public class UsuarioService {
             return usuarioRepository.save(usuario);
         }
         return usuario;
+    }
+
+    @Transactional
+    public void atualizarDocumento(String documento) {
+        if (!DocumentoHelper.documentoValido(documento)) {
+         throw new UsuarioBadRequestException("Documento inválido.");
+        }
+        Usuario usuario = UsuarioEscopo.usuarioAtual();
+        usuario.setNumeracaoDocumento(documento);
+        this.usuarioRepository.save(usuario);
     }
 
 }
