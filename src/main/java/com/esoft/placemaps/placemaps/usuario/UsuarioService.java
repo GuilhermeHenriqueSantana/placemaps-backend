@@ -1,11 +1,14 @@
 package com.esoft.placemaps.placemaps.usuario;
 
 import com.esoft.placemaps.helpers.DocumentoHelper;
+import com.esoft.placemaps.placemaps.foto.Foto;
+import com.esoft.placemaps.placemaps.usuario.dto.AtualizarUsuarioDTO;
 import com.esoft.placemaps.placemaps.usuario.exception.UsuarioBadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.esoft.placemaps.placemaps.evento.Evento;
@@ -49,6 +52,18 @@ public class UsuarioService {
         }
         Usuario usuario = UsuarioEscopo.usuarioAtual();
         usuario.setNumeracaoDocumento(documento);
+        this.usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void atualizar(AtualizarUsuarioDTO atualizarUsuarioDTO) {
+        Usuario usuario = UsuarioEscopo.usuarioAtual();
+        usuario.setNome(atualizarUsuarioDTO.getNome());
+        if (Objects.isNull(atualizarUsuarioDTO.getFotoUrl()) || atualizarUsuarioDTO.getFotoUrl().isEmpty()) {
+            usuario.setFoto(null);
+        } else {
+            usuario.setFoto(new Foto(atualizarUsuarioDTO.getFotoUrl()));
+        }
         this.usuarioRepository.save(usuario);
     }
 
