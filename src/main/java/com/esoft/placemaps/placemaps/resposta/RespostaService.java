@@ -45,4 +45,9 @@ public class RespostaService {
         return this.respostaRepository.obterRespostasPeloPonto(pageable, comentarioId);
     }
 
+    @Transactional(readOnly = true)
+    public Resposta obterRespostaPeloId(String id) {
+        return this.respostaRepository.findById(id).get();
+    }
+
 }
