@@ -1,5 +1,6 @@
 package com.esoft.placemaps.placemaps.usuario;
 
+import com.esoft.placemaps.placemaps.usuario.dto.AtualizarUsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,4 +34,11 @@ public class UsuarioController {
         this.usuarioService.atualizarDocumento(documento);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
+
+    @PutMapping
+    public ResponseEntity atualizarUsuario(@RequestBody AtualizarUsuarioDTO atualizarUsuarioDTO) {
+        this.usuarioService.atualizar(atualizarUsuarioDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
 }
