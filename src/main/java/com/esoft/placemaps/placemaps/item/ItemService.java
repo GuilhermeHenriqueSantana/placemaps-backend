@@ -44,7 +44,7 @@ public class ItemService {
     public Item atualizar(String id, ItemAtualizarDTO itemAtualizarDTO) {
         Optional<Item> itemOptional = itemRepository.findById(id);
         if (!itemOptional.isPresent()) {
-            throw new ItemBadRequestException("Item não econtrado.");
+            throw new ItemBadRequestException("Item não encontrado.");
         }
         return itemRepository.save(itemAtualizarDTO.atualizarItem(itemOptional.get()));
     }

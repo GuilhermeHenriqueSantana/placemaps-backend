@@ -71,7 +71,7 @@ public class PontoService {
     public Ponto obterPontoExistente(String pontoId) {
         Optional<Ponto> pontoOptional = pontoRepository.findById(pontoId);
         if (!pontoOptional.isPresent()) {
-            throw new PontoBadRequestException("Ponto não econtrado.");
+            throw new PontoBadRequestException("Ponto não encontrado.");
         }
         return pontoOptional.get();
     }

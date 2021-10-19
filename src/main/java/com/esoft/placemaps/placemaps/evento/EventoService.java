@@ -61,7 +61,7 @@ public class EventoService {
     public Evento obterEventoExistente(String eventoId) {
         Optional<Evento> eventoOptional = this.eventoRepository.findById(eventoId);
         if (!eventoOptional.isPresent()) {
-            throw new EventoBadRequestException("Evento não econtrado.");
+            throw new EventoBadRequestException("Evento não encontrado.");
         }
         return eventoOptional.get();
     }
@@ -69,7 +69,7 @@ public class EventoService {
     public Evento obterEventoExistentePelaLocalizacaoId(String localizacaoId) {
         Optional<Evento> eventoOptional = this.eventoRepository.findByLocalizacaoId(localizacaoId);
         if (!eventoOptional.isPresent()) {
-            throw new EventoBadRequestException("Evento não econtrado.");
+            throw new EventoBadRequestException("Evento não encontrado.");
         }
         return eventoOptional.get();
     }
