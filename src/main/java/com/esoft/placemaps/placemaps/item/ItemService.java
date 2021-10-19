@@ -46,7 +46,7 @@ public class ItemService {
         if (!itemOptional.isPresent()) {
             throw new ItemBadRequestException("Item não econtrado.");
         }
-        return itemAtualizarDTO.atualizarItem(itemOptional.get());
+        return itemRepository.save(itemAtualizarDTO.atualizarItem(itemOptional.get()));
     }
 
     public Page<Map<String, Object>> pegarItensPeloDadoSemanal(Pageable pageable, String dadoSemanalId) {
