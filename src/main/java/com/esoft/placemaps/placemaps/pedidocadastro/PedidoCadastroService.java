@@ -102,8 +102,14 @@ public class PedidoCadastroService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Page<PedidoCadastro> obterPedidosCadastrados(Pageable pageable) {
         return this.pedidoCadastroRepository.obterPedidosCadastrados(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public PedidoCadastro obterPedidoPeloId(String id) {
+        return this.pedidoCadastroRepository.findById(id).orElse(null);
     }
 
 }

@@ -25,4 +25,9 @@ public class AvaliacaoPublicController {
                                                                               @PathVariable String pontoId) {
     return ResponseEntity.ok(this.avaliacaoService.obterAvaliacoesPeloPonto(pageable, pontoId));
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Avaliacao> obterAvaliacaoPorId(@PathVariable String id) {
+    return ResponseEntity.ok(this.avaliacaoService.obterAvaliacaoPorId(id));
+  }
 }

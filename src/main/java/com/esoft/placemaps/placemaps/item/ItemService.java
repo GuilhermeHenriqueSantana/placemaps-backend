@@ -49,8 +49,13 @@ public class ItemService {
         return itemRepository.save(itemAtualizarDTO.atualizarItem(itemOptional.get()));
     }
 
+    @Transactional(readOnly = true)
     public Page<Map<String, Object>> pegarItensPeloDadoSemanal(Pageable pageable, String dadoSemanalId) {
         return this.itemRepository.findByDadoSemanalId(pageable, dadoSemanalId);
     }
-    
+
+    @Transactional(readOnly = true)
+    public Item obterItemPeloId(String id) {
+        return this.itemRepository.findById(id).orElse(null);
+    }
 }

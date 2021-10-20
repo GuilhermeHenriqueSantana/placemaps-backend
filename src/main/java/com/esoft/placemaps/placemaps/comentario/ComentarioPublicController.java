@@ -25,4 +25,9 @@ public class ComentarioPublicController {
                                                                         @PathVariable String pontoId) {
     return ResponseEntity.ok(this.comentarioService.obterComentariosPorPontoId(pageable, pontoId));
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Comentario> obterComentarioPeloId(@PathVariable String id) {
+    return ResponseEntity.ok(this.comentarioService.obterComentarioPeloId(id));
+  }
 }

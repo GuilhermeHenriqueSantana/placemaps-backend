@@ -32,9 +32,14 @@ public class PlanoService {
         return planoOptional.get();
     }
 
+    @Transactional(readOnly = true)
     public Page<Plano> pegarPlanos(Pageable pageable) {
-        return planoRepository.findAll(pageable);
+        return this.planoRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Plano pegarPlanoPeloId(String id) {
+        return this.planoRepository.findById(id).orElse(null);
+    }
 }
 
