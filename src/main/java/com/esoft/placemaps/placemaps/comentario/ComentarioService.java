@@ -38,4 +38,9 @@ public class ComentarioService {
         return this.comentarioRepository.obterComentariosPeloPonto(pageable, pontoId);
     }
 
+    @Transactional(readOnly = true)
+    public Comentario obterComentarioPeloId(String id) {
+        return this.comentarioRepository.findById(id).orElse(null);
+    }
+
 }
