@@ -21,9 +21,16 @@ public class PedidoCadastroController {
     this.pedidoCadastroService = pedidoCadastroService;
   }
 
-  @PostMapping("/aceitar-pedido")
-  public ResponseEntity<String> aceitarPedido(@RequestBody AceiteDePedidoDTO aceiteDePedidoDTO) {
-    return ResponseEntity.ok(this.pedidoCadastroService.aceitarPedido(aceiteDePedidoDTO));
+  @PutMapping("/aceitar-pedido")
+  public ResponseEntity aceitarPedido(@RequestBody AceiteDePedidoDTO aceiteDePedidoDTO) {
+    this.pedidoCadastroService.aceitarPedido(aceiteDePedidoDTO);
+    return ResponseEntity.accepted().build();
+  }
+
+  @PutMapping("/negar-pedido/{id}")
+  public ResponseEntity<String> negarPedido(@PathVariable String id) {
+    this.pedidoCadastroService.negarPedido(id);
+    return ResponseEntity.accepted().build();
   }
 
   @GetMapping("/{id}")
