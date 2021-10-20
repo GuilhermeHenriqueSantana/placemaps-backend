@@ -77,4 +77,9 @@ public class AvaliacaoService {
         return this.avaliacaoRepository.obterAvaliacoesPeloPonto(pageable, pontoId);
     }
 
+    @Transactional(readOnly = true)
+    public Avaliacao obterAvaliacaoPorId(String id) {
+        return this.avaliacaoRepository.findById(id).orElse(null);
+    }
+
 }

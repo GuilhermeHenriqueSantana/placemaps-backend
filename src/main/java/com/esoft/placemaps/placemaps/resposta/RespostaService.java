@@ -47,7 +47,7 @@ public class RespostaService {
 
     @Transactional(readOnly = true)
     public Resposta obterRespostaPeloId(String id) {
-        return this.respostaRepository.findById(id).get();
+        return this.respostaRepository.findById(id).orElse(null);
     }
 
 }
