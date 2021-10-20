@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -34,6 +36,9 @@ public class PedidoCadastro extends BasicClass {
 
     @Column(name = "numeracao_documento", nullable = false, length = 14)
     private String numeracaoDocumento;
+
+    @Column(name = "data", nullable = false)  
+    private Date data;
 
     @ManyToOne
     @JoinColumn(name = "plano_id", nullable = false)
