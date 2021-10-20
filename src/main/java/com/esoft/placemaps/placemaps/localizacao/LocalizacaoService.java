@@ -95,5 +95,8 @@ public class LocalizacaoService {
         }
         return localizacaoOptional.get();
     }
-    
+
+    public Localizacao obterLocalizacaoPeloId(String id) {
+        return this.localizacaoRepository.findById(id).orElse(null);
+    }
 }

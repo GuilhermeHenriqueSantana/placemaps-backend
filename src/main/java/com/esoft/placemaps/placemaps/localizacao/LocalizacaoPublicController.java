@@ -17,7 +17,7 @@ public class LocalizacaoPublicController {
 
   @GetMapping("/{id}")
   public ResponseEntity<Localizacao> obterLocalizacaoPeloId(@PathVariable String id) {
-    return ResponseEntity.ok(this.localizacaoService.obterLocalizacaoExistente(id));
+    return ResponseEntity.ok(this.localizacaoService.obterLocalizacaoPeloId(id));
   }
 
 }
