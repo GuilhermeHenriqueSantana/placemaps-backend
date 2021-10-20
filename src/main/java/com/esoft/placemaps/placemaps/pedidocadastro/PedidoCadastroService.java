@@ -10,9 +10,12 @@ import com.esoft.placemaps.placemaps.usuario.TipoUsuario;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -47,6 +50,7 @@ public class PedidoCadastroService {
         if (Objects.isNull(pedidoCadastro.getUsuario())) {
             pedidoCadastro.setSenha(this.autenticacaoService.criptografarSenha(pedidoCadastro.getSenha()));
         }
+        pedidoCadastro.setData(new Date());
         return this.pedidoCadastroRepository.save(pedidoCadastro);
     }
 
@@ -96,6 +100,10 @@ public class PedidoCadastroService {
         if (pedidoCadastro.isPresent()) {
             throw new PedidoCadastroBadRequestException("Email já cadastrado.");
         }
+    }
+
+    public Page<PedidoCadastro> obterPedidosCadastrados(Pageable pageable) {
+        return this.pedidoCadastroRepository.obterPedidosCadastrados(pageable);
     }
 
 }
