@@ -6,6 +6,7 @@ import com.esoft.placemaps.helpers.EmailHelper;
 import com.esoft.placemaps.helpers.SenhaHelper;
 import com.esoft.placemaps.placemaps.pedidocadastro.exception.PedidoCadastroBadRequestException;
 import com.esoft.placemaps.placemaps.plano.Plano;
+import com.esoft.placemaps.placemaps.usuario.TipoUsuario;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioEscopo;
 import lombok.AllArgsConstructor;
@@ -56,6 +57,9 @@ public class PedidoCadastro extends BasicClass {
             this.validarPedidoCadastroAnonimo();
         } else {
             this.usuario = UsuarioEscopo.usuarioAtual();
+            if (!this.usuario.getTipoUsuario().equals(TipoUsuario.USUARIO)) {
+                throw new PedidoCadastroBadRequestException("Tipo de usuário não possui permissão para se tornar um proprietário.");
+            }
             this.senha = this.usuario.getSenha();
             this.email = this.usuario.getEmail();
             this.nome = this.usuario.getNome();

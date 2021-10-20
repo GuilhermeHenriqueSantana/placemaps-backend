@@ -55,7 +55,7 @@ public class PedidoCadastroService {
     }
 
     @Transactional
-    public String aceitarPedido(AceiteDePedidoDTO aceiteDePedidoDTO) {
+    public void aceitarPedido(AceiteDePedidoDTO aceiteDePedidoDTO) {
         Optional<PedidoCadastro> pedidoCadastroOptional = this.pedidoCadastroRepository.findById(aceiteDePedidoDTO.getPedidoId());
         if (pedidoCadastroOptional.isPresent()) {
             Usuario usuario = new Usuario();
@@ -81,9 +81,13 @@ public class PedidoCadastroService {
                     .build());
 
             this.pedidoCadastroRepository.deleteById(aceiteDePedidoDTO.getPedidoId());
-            return "OK";
         }
         throw new PedidoCadastroBadRequestException("Pedido não encontrado.");
+    }
+
+    @Transactional
+    public void negarPedido(String id) {
+        this.pedidoCadastroRepository.deleteById(id);
     }
 
     public void validarEmailExistente(PedidoCadastro pedidoCadastro) {

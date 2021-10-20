@@ -28,6 +28,9 @@ public class AutenticacaoService {
     @Transactional
     public RespostaLoginDTO cadastrarUsuario(Usuario usuario) {
         usuario.validarUsuario();
+        if (this.usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new UsuarioBadRequestException("Email já cadastrado no sistema.");
+        }
         usuario.setTipoUsuario(TipoUsuario.USUARIO);
         String senha = usuario.getSenha();
         usuario.setSenha(this.criptografarSenha(senha));
