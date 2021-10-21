@@ -39,4 +39,15 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, String> {
   Page<Map<String, Object>> obterAvaliacoesPeloPonto(Pageable pageable,
                                                       @Param("pontoId") String pontoId);
 
+  @Query(nativeQuery = true,
+          value = "SELECT " +
+                  "   COALESCE(COUNT(*)) " +
+                  "FROM " +
+                  "   avaliacao a " +
+                  "INNER JOIN ponto p ON " +
+                  "   p.id = a.ponto_id " +
+                  "WHERE " +
+                  "   p.controle_ponto_id = :controleId")
+  Integer obterQtdeAvaliacoesPeloControleDePonto(@Param("controleId") String controleId);
+
 }
