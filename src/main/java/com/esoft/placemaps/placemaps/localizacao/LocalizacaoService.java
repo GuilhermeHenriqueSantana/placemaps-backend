@@ -1,6 +1,7 @@
 package com.esoft.placemaps.placemaps.localizacao;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ import com.esoft.placemaps.placemaps.localizacao.exception.LocalizacaoBadRequest
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,5 +101,10 @@ public class LocalizacaoService {
 
     public Localizacao obterLocalizacaoPeloId(String id) {
         return this.localizacaoRepository.findById(id).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Map<String, Object>> obterLocalizacoesPeloPontoId(Pageable pageable, String pontoId) {
+        return this.localizacaoRepository.obterLocalizacoesPeloPontoId(pageable, pontoId);
     }
 }
