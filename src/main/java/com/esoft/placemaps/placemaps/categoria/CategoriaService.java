@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.esoft.placemaps.placemaps.categoria.exception.CategoriaBadRequestException;
 
+import com.esoft.placemaps.placemaps.ponto.PontoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +15,13 @@ public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
 
+    private final PontoRepository pontoRepository;
+
     @Autowired
-    public CategoriaService(CategoriaRepository categoriaRepository) {
+    public CategoriaService(CategoriaRepository categoriaRepository,
+                            PontoRepository pontoRepository) {
         this.categoriaRepository = categoriaRepository;
+        this.pontoRepository = pontoRepository;
     }
 
     @Transactional
@@ -35,5 +40,13 @@ public class CategoriaService {
     public List<Categoria> obterTodas() {
         return categoriaRepository.findAll();
     } 
-    
+
+    @Transactional
+    public void deletarCategoria(String id) {
+        if (this.pontoRepository.existePontoComCategoriaId(id)) {
+            throw new CategoriaBadRequestException("Categoria já utilizada. Não é possível realizar a exclusão.");
+        } else {
+            this.categoriaRepository.deleteById(id);
+        }
+    }
 }

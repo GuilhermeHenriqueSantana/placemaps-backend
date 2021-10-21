@@ -104,4 +104,13 @@ public interface PontoRepository extends JpaRepository<Ponto, String> {
                                                            @Param("categoria") String categoria,
                                                            @Param("controleId") String controleId);
 
+  @Query(nativeQuery = true,
+          value = "SELECT " +
+                  "   COUNT(*) > 0 " +
+                  "FROM " +
+                  "   ponto p " +
+                  "WHERE " +
+                  "   p.categoria_id = :categoriaId")
+  Boolean existePontoComCategoriaId(@Param("categoriaId") String categoriaId);
+
 }
