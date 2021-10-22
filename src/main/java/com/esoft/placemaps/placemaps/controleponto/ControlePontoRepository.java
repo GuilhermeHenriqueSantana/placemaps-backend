@@ -25,6 +25,8 @@ public interface ControlePontoRepository extends JpaRepository<ControlePonto, St
                     "   c.usuario_id = :proprietarioId")
     Map<String, Object> obterPeloProprietario(@Param("proprietarioId") String proprietarioId);
 
+    ControlePonto findFirstByUsuarioId(String id);
+
     @Query(nativeQuery = true,
            value = "SELECT " +
                         "c.id, " +
