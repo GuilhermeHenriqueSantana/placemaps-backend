@@ -10,6 +10,7 @@ import com.esoft.placemaps.placemaps.usuario.TipoUsuario;
 import com.esoft.placemaps.placemaps.usuario.Usuario;
 import com.esoft.placemaps.placemaps.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -87,7 +88,9 @@ public class PedidoCadastroService {
 
     @Transactional
     public void negarPedido(String id) {
-        this.pedidoCadastroRepository.deleteById(id);
+        try {
+            this.pedidoCadastroRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {}
     }
 
     public void validarEmailExistente(PedidoCadastro pedidoCadastro) {

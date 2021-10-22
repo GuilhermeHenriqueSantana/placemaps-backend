@@ -5,6 +5,7 @@ import com.esoft.placemaps.placemaps.localizacao.dto.LocalizacaoFormDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,12 @@ public class LocalizacaoController {
     @PutMapping("/{id}")
     public ResponseEntity<Localizacao> editar(@PathVariable String id, @RequestBody LocalizacaoAtualizarDTO localizacaoAtualizarDTO) {
         return ResponseEntity.ok(this.localizacaoService.atualizar(id, localizacaoAtualizarDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletarLocalizacao(@PathVariable String id) {
+        this.localizacaoService.deletarLocalizacao(id);
+        return ResponseEntity.accepted().build();
     }
     
 }

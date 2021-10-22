@@ -55,4 +55,13 @@ public interface EventoRepository extends JpaRepository<Evento, String> {
                                 "ue.usuario_id = :usuarioId " + 
                         "AND e.fim >= NOW()")
     Page<Map<String, Object>> obterEventosDefinidoComoLembrete(Pageable pageable, @Param("usuarioId") String usuarioId);
+    
+    @Query(nativeQuery = true,
+          value = "SELECT " +
+                  "   COUNT(*) > 0 " +
+                  "FROM " +
+                  "   evento e " +
+                  "WHERE " +
+                  "   e.localizacao_id = :localizacaoId")
+    Boolean existeEventoComLocalizacaoId(@Param("localizacaoId") String localizacaoId);
 }

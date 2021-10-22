@@ -109,5 +109,9 @@ public class EventoService {
     public Page<Map<String, Object>> obterEventosDefinidoComoLembrete(Pageable pageable) {
         return this.eventoRepository.obterEventosDefinidoComoLembrete(pageable, UsuarioEscopo.usuarioAtual().getId());
     }
+
+    public boolean existeEventoComLocalizacaoId(String localizacaoId) {
+        return this.eventoRepository.existeEventoComLocalizacaoId(localizacaoId);
+    }
     
 }
