@@ -15,6 +15,7 @@ import com.esoft.placemaps.placemaps.localizacao.exception.LocalizacaoBadRequest
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -106,5 +107,15 @@ public class LocalizacaoService {
     @Transactional(readOnly = true)
     public Page<Map<String, Object>> obterLocalizacoesPeloPontoId(Pageable pageable, String pontoId) {
         return this.localizacaoRepository.obterLocalizacoesPeloPontoId(pageable, pontoId);
+    }
+
+    public void deletarLocalizacao(String id) {
+        if (this.eventoService.existeEventoComLocalizacaoId(id)) {
+            throw new LocalizacaoBadRequestException("Localização já utilizada em um evento. Não é possível realizar a exclusão.");
+        } else {
+            try {
+                this.localizacaoRepository.deleteById(id);
+            } catch (EmptyResultDataAccessException e) {}
+        }
     }
 }

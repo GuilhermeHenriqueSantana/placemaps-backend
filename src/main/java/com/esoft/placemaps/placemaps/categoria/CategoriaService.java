@@ -7,6 +7,7 @@ import com.esoft.placemaps.placemaps.categoria.exception.CategoriaBadRequestExce
 
 import com.esoft.placemaps.placemaps.ponto.PontoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,9 @@ public class CategoriaService {
         if (this.pontoRepository.existePontoComCategoriaId(id)) {
             throw new CategoriaBadRequestException("Categoria já utilizada. Não é possível realizar a exclusão.");
         } else {
-            this.categoriaRepository.deleteById(id);
+            try {
+                this.categoriaRepository.deleteById(id);
+            } catch (EmptyResultDataAccessException e) {}
         }
     }
 }

@@ -27,7 +27,7 @@ public class PedidoCadastroController {
     return ResponseEntity.accepted().build();
   }
 
-  @PutMapping("/negar-pedido/{id}")
+  @DeleteMapping("/negar-pedido/{id}")
   public ResponseEntity<String> negarPedido(@PathVariable String id) {
     this.pedidoCadastroService.negarPedido(id);
     return ResponseEntity.accepted().build();
