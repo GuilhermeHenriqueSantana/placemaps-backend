@@ -33,4 +33,15 @@ public interface ComentarioRepository extends JpaRepository<Comentario, String> 
   Page<Map<String, Object>> obterComentariosPeloPonto(Pageable pageable,
                                                       @Param("pontoId") String pontoId);
 
+  @Query(nativeQuery = true,
+          value = "SELECT " +
+                  "   COALESCE(COUNT(*)) " +
+                  "FROM " +
+                  "   comentario c " +
+                  "INNER JOIN ponto p ON " +
+                  "   p.id = c.ponto_id " +
+                  "WHERE " +
+                  "   p.controle_ponto_id = :controleId")
+  Integer obterQtdeComentariosPeloControleDePonto(@Param("controleId") String controleId);
+
 }

@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/api/avaliacao/responder-avaliacao").hasAnyAuthority("PROPRIETARIO");
         http.authorizeRequests().antMatchers("/api/controleponto/solicitar-pontos/**").hasAnyAuthority("PROPRIETARIO");
+        http.authorizeRequests().antMatchers("/api/controleponto/dashboard").hasAnyAuthority("PROPRIETARIO");
         http.authorizeRequests().antMatchers("/api/controleponto").hasAnyAuthority("PROPRIETARIO");
         http.authorizeRequests().antMatchers("/api/dadosemanal").hasAnyAuthority("PROPRIETARIO");
         http.authorizeRequests().antMatchers("/api/item").hasAnyAuthority("PROPRIETARIO");

@@ -1,5 +1,7 @@
 package com.esoft.placemaps.placemaps.controleponto;
 
+import com.esoft.placemaps.placemaps.controleponto.dto.DashboardDTO;
+import com.esoft.placemaps.placemaps.ponto.PontoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,4 +45,10 @@ public class ControlePontoController {
     public ResponseEntity<Page<Map<String, Object>>> obterControlesPontoSolicitados(Pageable pageable) {
         return ResponseEntity.ok(this.controlePontoService.obterControlesPontoSolicitados(pageable));
     }
+
+    @GetMapping("/dashboard")
+    public ResponseEntity<DashboardDTO> dashboard() {
+        return ResponseEntity.ok(this.controlePontoService.dashboard());
+    }
+
 }
