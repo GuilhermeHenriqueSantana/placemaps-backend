@@ -39,37 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .and();
 
-        http.authorizeRequests().antMatchers("/api/categoria").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/api/controleponto/solicitados").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/api/controleponto/aceitar-solicitacao-pontos/**").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/api/controleponto/negar-solicitacao-pontos/**").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/api/pedidocadastro").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/api/plano").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/api/mensagem").hasAnyAuthority("ADMIN");
-
-        http.authorizeRequests().antMatchers("/api/avaliacao/responder-avaliacao").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/controleponto/solicitar-pontos/**").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/controleponto/dashboard").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/controleponto").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/dadosemanal").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/item").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/localizacao").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/localizacao/{id}").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/ponto/categoria/**").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/ponto/ativar/**").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/ponto/desativar/**").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/ponto/obter-pelo-proprietario").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/evento").hasAnyAuthority("PROPRIETARIO");
-        http.authorizeRequests().antMatchers("/api/usuario/atualizar-documento").hasAnyAuthority("PROPRIETARIO");
-
-        http.authorizeRequests().antMatchers("/api/avaliacao").hasAnyAuthority("PROPRIETARIO", "USUARIO");
-        http.authorizeRequests().antMatchers("/api/comentario").hasAnyAuthority("PROPRIETARIO", "USUARIO");
-        http.authorizeRequests().antMatchers("/api/resposta").hasAnyAuthority("PROPRIETARIO", "USUARIO");
-        http.authorizeRequests().antMatchers("/api/usuario/lembrar-evento/**").hasAnyAuthority("PROPRIETARIO", "USUARIO");
-        http.authorizeRequests().antMatchers("/api/usuario/esquecer-evento/**").hasAnyAuthority("PROPRIETARIO", "USUARIO");
-        http.authorizeRequests().antMatchers("/api/evento/lembretes").hasAnyAuthority("PROPRIETARIO", "USUARIO");
-        http.authorizeRequests().antMatchers("/api/opiniao").hasAnyAuthority("PROPRIETARIO", "USUARIO");
-
         http.authorizeRequests()
                 .antMatchers("/swagger-ui.html/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()

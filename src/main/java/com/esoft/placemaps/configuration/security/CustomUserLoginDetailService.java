@@ -29,9 +29,9 @@ public class CustomUserLoginDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuário não encontrado.");
         }
         Usuario usuario = usuarioOptional.get();
-        List<GrantedAuthority> authoritiesAdmin = AuthorityUtils.createAuthorityList("ADMIN");
-        List<GrantedAuthority> authoritiesUsuario = AuthorityUtils.createAuthorityList("USUARIO");
-        List<GrantedAuthority> authoritiesProprietario = AuthorityUtils.createAuthorityList("PROPRIETARIO");
+        List<GrantedAuthority> authoritiesAdmin = AuthorityUtils.createAuthorityList("ROLE_ADMIN");
+        List<GrantedAuthority> authoritiesUsuario = AuthorityUtils.createAuthorityList("ROLE_USUARIO");
+        List<GrantedAuthority> authoritiesProprietario = AuthorityUtils.createAuthorityList("ROLE_PROPRIETARIO");
 
         List<GrantedAuthority> authoritiesCurrent;
 
