@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -19,21 +20,25 @@ public class PontoController {
         this.pontoService = pontoService;
     }
 
+    @PreAuthorize("hasRole('PROPRIETARIO')")
     @PostMapping("/categoria/{categoriaId}")
     public ResponseEntity<String> salvar(@PathVariable String categoriaId, @RequestBody Ponto ponto) {
         return ResponseEntity.ok(this.pontoService.salvar(categoriaId, ponto));
     }
 
+    @PreAuthorize("hasRole('PROPRIETARIO')")
     @PutMapping("/ativar/{pontoId}")
     public ResponseEntity<String> ativar(@PathVariable String pontoId) {
         return ResponseEntity.ok(this.pontoService.ativarDesativar(pontoId, true));
     }
 
+    @PreAuthorize("hasRole('PROPRIETARIO')")
     @PutMapping("/desativar/{pontoId}")
     public ResponseEntity<String> desativar(@PathVariable String pontoId) {
         return ResponseEntity.ok(this.pontoService.ativarDesativar(pontoId, false));
     }
 
+    @PreAuthorize("hasRole('PROPRIETARIO')")
     @GetMapping("/obter-pelo-proprietario")
     public ResponseEntity<Page<Map<String, Object>>> pontosPorNomeCategoriaProprietario(Pageable pageable,
                                                                              @RequestParam(value = "categoria", required = false, defaultValue = "") String categoria,

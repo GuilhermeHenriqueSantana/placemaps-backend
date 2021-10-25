@@ -5,6 +5,7 @@ import com.esoft.placemaps.placemaps.item.dto.ItemFormDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,11 +24,13 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    @PreAuthorize("hasRole('PROPRIETARIO')")
     @PostMapping
     public ResponseEntity<Item> salvar(@RequestBody ItemFormDTO itemFormDTO) {
         return ResponseEntity.ok(itemService.salvar(itemFormDTO));
     }
 
+    @PreAuthorize("hasRole('PROPRIETARIO')")
     @PutMapping("/{id}")
     public ResponseEntity<Item> atualizar(@RequestBody ItemAtualizarDTO itemAtualizarDTO, @PathVariable String id) {
         return ResponseEntity.ok(itemService.atualizar(id, itemAtualizarDTO));
