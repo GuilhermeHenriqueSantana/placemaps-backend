@@ -132,5 +132,10 @@ public class EventoService {
             throw new EventoBadRequestException("Evento não encontrado.");
         }
     }
+
+    @Transactional
+    public Page<Map<String, Object>> obterEventosPeloProprietario(Pageable pageable) {
+        return this.eventoRepository.obterEventosPeloProprietario(pageable, this.controlePontoRepository.findFirstByUsuarioId(UsuarioEscopo.usuarioAtual().getId()).getId());
+    }
     
 }

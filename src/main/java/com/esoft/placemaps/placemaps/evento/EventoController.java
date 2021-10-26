@@ -45,5 +45,11 @@ public class EventoController {
         this.eventoService.ativarDesativar(id, Boolean.FALSE);
         return ResponseEntity.accepted().build();
     }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @GetMapping("/proprietario")
+    public ResponseEntity<Page<Map<String, Object>>> obterEventosPeloProprietario(Pageable pageable) {
+        return ResponseEntity.ok(this.eventoService.obterEventosPeloProprietario(pageable));
+    }
     
 }

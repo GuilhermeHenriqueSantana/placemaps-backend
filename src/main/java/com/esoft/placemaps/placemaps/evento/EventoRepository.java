@@ -64,4 +64,23 @@ public interface EventoRepository extends JpaRepository<Evento, String> {
                   "WHERE " +
                   "   e.localizacao_id = :localizacaoId")
     Boolean existeEventoComLocalizacaoId(@Param("localizacaoId") String localizacaoId);
+
+    @Query(nativeQuery = true,
+          value = "SELECT " +
+                  "   e.id, " +
+                  "   e.nome, " +
+                  "   e.descricao, " +
+                  "   e.inicio, " +
+                  "   e.fim " +
+                  "FROM " +
+                  "   evento e " +
+                  "WHERE " +
+                  "   e.controle_ponto_id = :controleId",
+            countQuery = "SELECT " +
+                    "   COUNT(e.id) " +
+                    "FROM " +
+                    "   evento e " +
+                    "WHERE " +
+                    "   e.controle_ponto_id = :controleId")
+    Page<Map<String, Object>> obterEventosPeloProprietario(Pageable pageable, @Param("controleId") String controleId);
 }
