@@ -1,5 +1,6 @@
 package com.esoft.placemaps.placemaps.item;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -57,5 +58,10 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Item obterItemPeloId(String id) {
         return this.itemRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void deletarItens(String dadoSemanalId) {
+        this.itemRepository.removeByDadoSemanalId(dadoSemanalId);
     }
 }

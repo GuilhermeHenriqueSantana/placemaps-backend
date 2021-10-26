@@ -7,9 +7,11 @@ import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalFormDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.exception.DadoSemanalBadRequestException;
 import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
 import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemanaRepository;
+import com.esoft.placemaps.placemaps.item.ItemService;
 import com.esoft.placemaps.placemaps.ponto.PontoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,17 @@ public class DadoSemanalService {
 
     private final DiaDaSemanaRepository diaDaSemanaRepository;
 
+    private final ItemService itemService;
+
     @Autowired
     public DadoSemanalService(DadoSemanalRepository dadoSemanalRepository,
                               PontoService pontoService,
-                              DiaDaSemanaRepository diaDaSemanaRepository) {
+                              DiaDaSemanaRepository diaDaSemanaRepository,
+                              ItemService itemService) {
         this.dadoSemanalRepository = dadoSemanalRepository;
         this.pontoService = pontoService;
-        this.diaDaSemanaRepository = diaDaSemanaRepository;                  
+        this.diaDaSemanaRepository = diaDaSemanaRepository;
+        this.itemService = itemService;                
     }
 
     @Transactional
@@ -53,6 +59,13 @@ public class DadoSemanalService {
     @Transactional(readOnly = true)
     public DadoSemanal obterDadoSemanalPeloId(String id) {
         return this.dadoSemanalRepository.findById(id).orElse(null);
+    }
+
+    public void deletarDadoSemanal(String id) {
+        this.itemService.deletarItens(id);
+        try {
+            this.dadoSemanalRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {}     
     }
 
 }
