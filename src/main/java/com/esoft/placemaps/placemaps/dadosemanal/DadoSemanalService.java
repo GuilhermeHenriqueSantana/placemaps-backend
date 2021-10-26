@@ -2,7 +2,9 @@ package com.esoft.placemaps.placemaps.dadosemanal;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalAtualizarDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalFormDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.exception.DadoSemanalBadRequestException;
 import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
@@ -45,6 +47,21 @@ public class DadoSemanalService {
         dadoSemanal.setPonto(this.pontoService.obterPontoExistente(dadoSemanalFormDTO.getPontoId()));
         List<DiaDaSemana> diasDaSemana = this.diaDaSemanaRepository.obterDiasDaSemanaPorIds(dadoSemanalFormDTO.getDiasDaSemanaIds());
         if (diasDaSemana.size() != dadoSemanalFormDTO.getDiasDaSemanaIds().size()) {
+            throw new DadoSemanalBadRequestException("Algum(ns) DiaDaSemana não foi encontrado.");
+        }
+        dadoSemanal.setDiasDaSemana(diasDaSemana);
+        return this.dadoSemanalRepository.save(dadoSemanal);
+    }
+
+    @Transactional
+    public DadoSemanal atualizar(String id, DadoSemanalAtualizarDTO dadoSemanalAtualizarDTO) {
+        Optional<DadoSemanal> dadoSemanalOptional = this.dadoSemanalRepository.findById(id);
+        if (!dadoSemanalOptional.isPresent()) {
+            throw new DadoSemanalBadRequestException("Dado semanal não encontrado.");
+        }
+        DadoSemanal dadoSemanal = dadoSemanalAtualizarDTO.atualizarDadoSemanal(dadoSemanalOptional.get());
+        List<DiaDaSemana> diasDaSemana = this.diaDaSemanaRepository.obterDiasDaSemanaPorIds(dadoSemanalAtualizarDTO.getDiasDaSemanaIds());
+        if (diasDaSemana.size() != dadoSemanalAtualizarDTO.getDiasDaSemanaIds().size()) {
             throw new DadoSemanalBadRequestException("Algum(ns) DiaDaSemana não foi encontrado.");
         }
         dadoSemanal.setDiasDaSemana(diasDaSemana);
