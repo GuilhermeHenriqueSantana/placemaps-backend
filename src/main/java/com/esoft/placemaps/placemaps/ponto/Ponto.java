@@ -33,7 +33,7 @@ public class Ponto extends BasicClass {
     private Boolean fixo;
 
     @Column(name = "ativo")
-    private Boolean ativo = true;
+    private Boolean ativo = Boolean.TRUE;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "contato_id")

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.esoft.placemaps.placemaps.controleponto.ControlePontoRepository;
 import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
 import com.esoft.placemaps.placemaps.diadasemana.NomeDiaSemana;
 import com.esoft.placemaps.placemaps.evento.exception.EventoBadRequestException;
@@ -29,15 +30,22 @@ public class EventoService {
 
     private final PontoService pontoService;
 
+    private final ControlePontoRepository controlePontoRepository;
+
     @Autowired
-    public EventoService(EventoRepository eventoRepository, LocalizacaoRepository localizacaoRepository, PontoService pontoService) {
+    public EventoService(EventoRepository eventoRepository,
+                         LocalizacaoRepository localizacaoRepository,
+                         PontoService pontoService,
+                         ControlePontoRepository controlePontoRepository) {
         this.eventoRepository = eventoRepository;
         this.localizacaoRepository = localizacaoRepository;
         this.pontoService = pontoService;
+        this.controlePontoRepository = controlePontoRepository;
     }
 
     @Transactional
     public Evento salvar(String pontoId, Evento evento) {
+        evento.setControlePonto(this.controlePontoRepository.findFirstByUsuarioId(UsuarioEscopo.usuarioAtual().getId()));
         if (pontoId.isEmpty()) {
             if (Objects.nonNull(evento.getPonto())) {
                 throw new EventoBadRequestException("Id do ponto deve ser passado utilizando variavel na url ex: ?pontoId=id");
@@ -112,6 +120,17 @@ public class EventoService {
 
     public boolean existeEventoComLocalizacaoId(String localizacaoId) {
         return this.eventoRepository.existeEventoComLocalizacaoId(localizacaoId);
+    }
+
+    @Transactional
+    public void ativarDesativar(String id, Boolean ativo) {
+        Optional<Evento> evento = this.eventoRepository.findById(id);
+        if (evento.isPresent()) {
+            evento.get().setAtivo(ativo);
+            this.eventoRepository.save(evento.get());
+        } else {
+            throw new EventoBadRequestException("Evento não encontrado.");
+        }
     }
     
 }
