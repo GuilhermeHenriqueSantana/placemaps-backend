@@ -86,7 +86,6 @@ public class PedidoCadastroService {
         throw new PedidoCadastroBadRequestException("Pedido não encontrado.");
     }
 
-    @Transactional
     public void negarPedido(String id) {
         try {
             this.pedidoCadastroRepository.deleteById(id);
