@@ -2,9 +2,12 @@ package com.esoft.placemaps.placemaps.evento;
 
 import com.esoft.placemaps.configuration.basicclass.BasicClass;
 import com.esoft.placemaps.placemaps.contato.Contato;
+import com.esoft.placemaps.placemaps.controleponto.ControlePonto;
 import com.esoft.placemaps.placemaps.foto.Foto;
 import com.esoft.placemaps.placemaps.localizacao.Localizacao;
 import com.esoft.placemaps.placemaps.ponto.Ponto;
+import com.esoft.placemaps.placemaps.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +36,9 @@ public class Evento extends BasicClass {
     @Column(name = "descricao", nullable = false, length = 1000)
     private String descricao;
 
+    @Column(name = "ativo")
+    private Boolean ativo = Boolean.TRUE;
+
     @ManyToOne
     @JoinColumn(name = "ponto_id")
     private Ponto ponto;
@@ -52,5 +58,10 @@ public class Evento extends BasicClass {
             inverseJoinColumns = @JoinColumn(name = "foto_id")
     )
     private List<Foto> fotos;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "controle_ponto_id")
+    private ControlePonto controlePonto;
 
 }

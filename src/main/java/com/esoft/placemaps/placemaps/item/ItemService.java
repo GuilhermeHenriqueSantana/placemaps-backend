@@ -12,6 +12,7 @@ import com.esoft.placemaps.placemaps.item.dto.ItemFormDTO;
 import com.esoft.placemaps.placemaps.item.exception.ItemBadRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,12 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Item obterItemPeloId(String id) {
         return this.itemRepository.findById(id).orElse(null);
+    }
+
+    public void deletarItem(String id) {
+        try {
+            this.itemRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {}
     }
 
     @Transactional
