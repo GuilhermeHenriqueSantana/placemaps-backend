@@ -1,5 +1,6 @@
 package com.esoft.placemaps.placemaps.dadosemanal;
 
+import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalAtualizarDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalFormDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +29,12 @@ public class DadoSemanalController {
     @PostMapping
     public ResponseEntity<DadoSemanal> salvar(@RequestBody DadoSemanalFormDTO dadoSemanalFormDTO) {
         return ResponseEntity.ok(this.dadoSemanalService.salvar(dadoSemanalFormDTO));
+    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @PutMapping("/{id}")
+    public ResponseEntity<DadoSemanal> atualizar(@PathVariable String id, @RequestBody DadoSemanalAtualizarDTO dadoSemanalAtualizarDTO) {
+        return ResponseEntity.ok(this.dadoSemanalService.atualizar(id, dadoSemanalAtualizarDTO));
     }
 
     @PreAuthorize("hasRole('PROPRIETARIO')")
