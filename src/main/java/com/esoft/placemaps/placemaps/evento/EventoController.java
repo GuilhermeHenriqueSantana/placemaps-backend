@@ -7,12 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/evento")
@@ -35,6 +30,26 @@ public class EventoController {
     @GetMapping("/lembretes")
     public ResponseEntity<Page<Map<String, Object>>> obterEventosDefinidoComoLembrete(Pageable pageable) {
         return ResponseEntity.ok(eventoService.obterEventosDefinidoComoLembrete(pageable));
+    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity ativar(@PathVariable String id) {
+        this.eventoService.ativarDesativar(id, Boolean.TRUE);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity desativar(@PathVariable String id) {
+        this.eventoService.ativarDesativar(id, Boolean.FALSE);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PreAuthorize("hasRole('PROPRIETARIO')")
+    @GetMapping("/proprietario")
+    public ResponseEntity<Page<Map<String, Object>>> obterEventosPeloProprietario(Pageable pageable) {
+        return ResponseEntity.ok(this.eventoService.obterEventosPeloProprietario(pageable));
     }
     
 }

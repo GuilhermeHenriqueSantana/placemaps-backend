@@ -42,7 +42,6 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     } 
 
-    @Transactional
     public void deletarCategoria(String id) {
         if (this.pontoRepository.existePontoComCategoriaId(id)) {
             throw new CategoriaBadRequestException("Categoria já utilizada. Não é possível realizar a exclusão.");
