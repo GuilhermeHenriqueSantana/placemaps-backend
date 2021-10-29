@@ -28,21 +28,21 @@ public class CategoriaPublicControllerTeste {
 
   @Test
   void obterTodas() throws Exception {
-    List<Categoria> avaliacaoList = Arrays.asList(
+    List<Categoria> categorias = Arrays.asList(
             new Categoria("Categoria 1"),
             new Categoria("Categoria 2"),
             new Categoria("Categoria 3")
     );
     Mockito.when(this.categoriaRepository.findAll())
-            .thenReturn(avaliacaoList);
+            .thenReturn(categorias);
 
     String categoriaListJson = mockMvc.perform(get("/api/public/categoria"))
             .andReturn()
             .getResponse()
             .getContentAsString();
 
-    Categoria[] categorias = jacksonObjectMapper.readValue(categoriaListJson, Categoria[].class);
+    Categoria[] categoriasExistentes = jacksonObjectMapper.readValue(categoriaListJson, Categoria[].class);
 
-    Assertions.assertEquals(3, categorias.length);
+    Assertions.assertEquals(categorias.size(), categoriasExistentes.length);
   }
 }
