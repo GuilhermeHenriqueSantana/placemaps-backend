@@ -1,10 +1,12 @@
 package com.esoft.placemaps.placemaps.dadosemanal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalAtualizarDTO;
+import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalDiaDaSemanaDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.dto.DadoSemanalFormDTO;
 import com.esoft.placemaps.placemaps.dadosemanal.exception.DadoSemanalBadRequestException;
 import com.esoft.placemaps.placemaps.diadasemana.DiaDaSemana;
@@ -71,6 +73,19 @@ public class DadoSemanalService {
     @Transactional(readOnly = true)
     public Page<Map<String, Object>> obterDadosPorPontoId(Pageable pageable, String pontoId) {
         return this.dadoSemanalRepository.findDadoSemanalsByPontoId(pageable, pontoId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<DadoSemanalDiaDaSemanaDTO> obterDadosPorPontoIdPorDias(String pontoId) {
+        List<DadoSemanalDiaDaSemanaDTO> dadosList =  new ArrayList<>();
+        List<DiaDaSemana> diaDaSemanaList = this.diaDaSemanaRepository.findAll();
+        diaDaSemanaList.forEach(dia -> {
+            DadoSemanalDiaDaSemanaDTO dadoSemanalDiaDaSemanaDTO = new DadoSemanalDiaDaSemanaDTO();
+            dadoSemanalDiaDaSemanaDTO.setDiaDaSemana(dia.getNomeDiaSemana().name());
+            dadoSemanalDiaDaSemanaDTO.setDadoSemanalList(this.dadoSemanalRepository.findDadoSemanalsByPontoIdAndDiaDaSemanaId(pontoId, dia.getId()));
+            dadosList.add(dadoSemanalDiaDaSemanaDTO);
+        });
+        return dadosList;
     }
 
     @Transactional(readOnly = true)
