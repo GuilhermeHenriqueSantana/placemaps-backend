@@ -1,10 +1,13 @@
 package com.esoft.placemaps.helpers;
 
 import java.util.InputMismatchException;
+import java.util.Objects;
 
 public class DocumentoHelper {
     public static Boolean documentoValido(String documento) {
-        if (documento.length() == 14) {
+        if (Objects.isNull(documento)) {
+            return false;
+        } else if (documento.length() == 14) {
             return cnpjValido(documento);
         } else if (documento.length() == 11) {
             return cpfValido(documento);
@@ -13,7 +16,8 @@ public class DocumentoHelper {
     }
 
     public static Boolean cnpjValido(String cnpj) {
-        if (cnpj.equals("00000000000000") || cnpj.equals("11111111111111") ||
+        if (Objects.isNull(cnpj) || (cnpj.length() != 14) ||
+                cnpj.equals("00000000000000") || cnpj.equals("11111111111111") ||
                 cnpj.equals("22222222222222") || cnpj.equals("33333333333333") ||
                 cnpj.equals("44444444444444") || cnpj.equals("55555555555555") ||
                 cnpj.equals("66666666666666") || cnpj.equals("77777777777777") ||
@@ -72,8 +76,8 @@ public class DocumentoHelper {
     }
 
     public static boolean cpfValido(String cpf) {
-        if (cpf.equals("00000000000") ||
-                cpf.equals("11111111111") ||
+        if (Objects.isNull(cpf) || (cpf.length() != 11) ||
+                cpf.equals("00000000000") || cpf.equals("11111111111") ||
                 cpf.equals("22222222222") || cpf.equals("33333333333") ||
                 cpf.equals("44444444444") || cpf.equals("55555555555") ||
                 cpf.equals("66666666666") || cpf.equals("77777777777") ||

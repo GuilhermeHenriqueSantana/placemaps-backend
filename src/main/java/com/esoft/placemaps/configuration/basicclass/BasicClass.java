@@ -12,6 +12,7 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class BasicClass {
+    @EqualsAndHashCode.Include
     @Id
     @Column(name = "id", length = 36)
     protected String id;
