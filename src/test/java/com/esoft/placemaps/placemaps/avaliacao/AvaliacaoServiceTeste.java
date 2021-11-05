@@ -18,6 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.*;
@@ -166,6 +170,29 @@ public class AvaliacaoServiceTeste {
     String actualMessage = exception.getMessage();
 
     Assertions.assertEquals(expectedMessage, actualMessage);
+  }
+
+  @Test
+  void obterAvaliacoesPeloPonto() {
+    String pontoId = "id";
+
+    Map map = new HashMap();
+    map.put("id", "id");
+    map.put("descricao", "descricao");
+    map.put("data", new Date());
+    map.put("nota", 5);
+    map.put("nome", "nome");
+
+    Pageable pageable = PageRequest.of(0, 10);
+
+    Page<Map<String, Object>> avaliacoesPage = new PageImpl(Collections.singletonList(map), pageable, 1);
+
+    Mockito.when(this.avaliacaoRepository.obterAvaliacoesPeloPonto(pageable, pontoId))
+            .thenReturn(avaliacoesPage);
+
+    Page<Map<String, Object>> avaliacoesObtidasPage = this.avaliacaoService.obterAvaliacoesPeloPonto(pageable, pontoId);
+
+    Assertions.assertEquals(avaliacoesPage, avaliacoesObtidasPage);
   }
 
   @Test
