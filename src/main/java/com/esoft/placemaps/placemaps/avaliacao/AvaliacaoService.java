@@ -24,7 +24,7 @@ public class AvaliacaoService {
 
     private final AvaliacaoRepository avaliacaoRepository;
     private final PontoService pontoService;
-    private  final ControlePontoRepository controlePontoRepository;
+    private final ControlePontoRepository controlePontoRepository;
 
     @Autowired
     public AvaliacaoService(AvaliacaoRepository avaliacaoRepository,

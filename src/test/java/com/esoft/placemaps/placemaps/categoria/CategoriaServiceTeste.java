@@ -40,6 +40,22 @@ public class CategoriaServiceTeste {
   }
 
   @Test
+  void throwObterCategoriaExistente() {
+    String id = "id";
+    Mockito.when(this.categoriaRepository.findById(id))
+            .thenReturn(Optional.empty());
+
+    Exception exception = assertThrows((CategoriaBadRequestException.class), () -> {
+      this.categoriaService.obterCategoriaExistente(id);
+    });
+
+    String expectedMessage = "Categoria não econtrada.";
+    String actualMessage = exception.getMessage();
+
+    Assertions.assertEquals(actualMessage, expectedMessage);
+  }
+
+  @Test
   void salvar() {
     Categoria categoria = new Categoria("Categoria 1");
 
@@ -68,25 +84,27 @@ public class CategoriaServiceTeste {
 
   @Test
   void deletarCategoria() {
+    String id = "id";
     Boolean existePonto = Boolean.FALSE;
-    Mockito.when(this.pontoRepository.existePontoComCategoriaId("id"))
+    Mockito.when(this.pontoRepository.existePontoComCategoriaId(id))
             .thenReturn(existePonto);
 
-    this.categoriaService.deletarCategoria("id");
+    this.categoriaService.deletarCategoria(id);
 
-    Mockito.verify(this.categoriaRepository).deleteById("id");
+    Mockito.verify(this.categoriaRepository).deleteById(id);
 
     Assertions.assertTrue(Boolean.TRUE);
   }
 
   @Test
   void throwDeletarCategoriaComPontoExistente() {
+    String id = "id";
     Boolean existePonto = Boolean.TRUE;
-    Mockito.when(this.pontoRepository.existePontoComCategoriaId("id"))
+    Mockito.when(this.pontoRepository.existePontoComCategoriaId(id))
             .thenReturn(existePonto);
 
     Exception exception = assertThrows((CategoriaBadRequestException.class), () -> {
-      this.categoriaService.deletarCategoria("id");
+      this.categoriaService.deletarCategoria(id);
     });
 
     String expectedMessage = "Categoria já utilizada. Não é possível realizar a exclusão.";
