@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -19,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @AutoConfigureMockMvc
-@WithMockUser(roles = "ADMIN")
 @SpringBootTest
 public class CategoriaControllerTeste {
     @Autowired
@@ -31,6 +31,7 @@ public class CategoriaControllerTeste {
     private CategoriaRepository categoriaRepository;
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void salvar() throws Exception {
         Categoria categoria = new Categoria("Categoria 1");
         
@@ -43,14 +44,11 @@ public class CategoriaControllerTeste {
         String requestJson = ow.writeValueAsString(categoria);
     
         String categoriaJson = mockMvc.perform(post("/api/categoria")
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andReturn()  
                 .getResponse()
                 .getContentAsString();  
-
-        System.out.println("aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-        System.out.println(categoriaJson);
-        System.out.println("aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                 
         Categoria categoriaSalva = jacksonObjectMapper.readValue(categoriaJson, Categoria.class);
 
