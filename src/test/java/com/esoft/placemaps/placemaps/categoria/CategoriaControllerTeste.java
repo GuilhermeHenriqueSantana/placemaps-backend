@@ -2,7 +2,6 @@ package com.esoft.placemaps.placemaps.categoria;
 
 import com.esoft.placemaps.placemaps.categoria.exception.CategoriaBadRequestException;
 import com.esoft.placemaps.placemaps.ponto.PontoRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
