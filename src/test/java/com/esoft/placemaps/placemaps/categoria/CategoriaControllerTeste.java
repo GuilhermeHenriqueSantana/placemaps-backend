@@ -1,5 +1,7 @@
 package com.esoft.placemaps.placemaps.categoria;
 
+import com.esoft.placemaps.placemaps.categoria.exception.CategoriaBadRequestException;
+import com.esoft.placemaps.placemaps.ponto.PontoRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -29,6 +32,8 @@ public class CategoriaControllerTeste {
 
     @MockBean
     private CategoriaRepository categoriaRepository;
+    @MockBean
+    private PontoRepository pontoRepository;
 
     @Test
     @WithMockUser(roles = "ADMIN")
@@ -53,5 +58,38 @@ public class CategoriaControllerTeste {
         Categoria categoriaSalva = jacksonObjectMapper.readValue(categoriaJson, Categoria.class);
 
         assertEquals(categoria, categoriaSalva);
+  }
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void deletarCategoria() throws Exception {
+        String id = "id";
+        Boolean existePonto = Boolean.FALSE;
+        Mockito.when(this.pontoRepository.existePontoComCategoriaId(id))
+                .thenReturn(existePonto);
+
+        mockMvc.perform(delete("/api/categoria/id")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn()  
+                .getResponse()
+                .getContentAsString();
+        
+        Mockito.verify(this.categoriaRepository).deleteById(id);
+
+        Assertions.assertTrue(Boolean.TRUE);
+  }
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void throwDeletarCategoriaComPontoExistente() throws Exception {
+    String id = "id";
+    Boolean existePonto = Boolean.TRUE;
+    Mockito.when(this.pontoRepository.existePontoComCategoriaId(id))
+            .thenReturn(existePonto);
+    
+    mockMvc.perform(delete("/api/categoria/id")
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof CategoriaBadRequestException))
+            .andExpect(result -> assertEquals("Categoria já utilizada. Não é possível realizar a exclusão.", result.getResolvedException().getMessage()));
   }
 }
