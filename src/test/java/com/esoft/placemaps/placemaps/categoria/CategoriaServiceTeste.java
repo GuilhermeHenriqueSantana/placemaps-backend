@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +57,7 @@ public class CategoriaServiceTeste {
   }
 
   @Test
+  @WithMockUser(roles = "ADMIN")
   void salvar() {
     Categoria categoria = new Categoria("Categoria 1");
 
@@ -83,6 +85,7 @@ public class CategoriaServiceTeste {
   }
 
   @Test
+  @WithMockUser(roles = "ADMIN")
   void deletarCategoria() {
     String id = "id";
     Boolean existePonto = Boolean.FALSE;
@@ -97,6 +100,7 @@ public class CategoriaServiceTeste {
   }
 
   @Test
+  @WithMockUser(roles = "ADMIN")
   void throwDeletarCategoriaComPontoExistente() {
     String id = "id";
     Boolean existePonto = Boolean.TRUE;
