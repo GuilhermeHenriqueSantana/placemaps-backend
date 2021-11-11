@@ -5,9 +5,13 @@ import java.util.List;
 
 import com.esoft.placemaps.placemaps.dadosemanal.DadoSemanal;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DadoSemanalAtualizarDTO {
     
     private String nome;
