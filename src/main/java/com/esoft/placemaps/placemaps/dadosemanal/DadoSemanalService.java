@@ -93,6 +93,7 @@ public class DadoSemanalService {
         return this.dadoSemanalRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public void deletarDadoSemanal(String id) {
         this.itemService.deletarItens(id);
         try {
