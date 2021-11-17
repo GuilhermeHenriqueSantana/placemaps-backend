@@ -4,9 +4,15 @@ import java.util.List;
 
 import com.esoft.placemaps.placemaps.localizacao.Localizacao;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LocalizacaoAtualizarDTO {
     
     private String pais;
