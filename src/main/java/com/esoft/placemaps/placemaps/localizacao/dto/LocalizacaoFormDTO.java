@@ -34,7 +34,7 @@ public class LocalizacaoFormDTO {
             .bairro(bairro).numero(numero).rua(rua)
             .longitude(longitude).latitude(latitude)
             .build();
-        if (Objects.isNull(id) && !id.isEmpty()) {
+        if (Objects.nonNull(id) && !id.isEmpty()) {
             localizacao.setId(id);
         }
         return localizacao;
