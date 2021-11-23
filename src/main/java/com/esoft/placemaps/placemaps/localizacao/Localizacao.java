@@ -42,7 +42,7 @@ public class Localizacao extends BasicClass {
     @Column(name = "numero", nullable = false, length = 50)
     private String numero;
 
-    @Column(name = "rua", nullable = false, length = 20)
+    @Column(name = "rua", nullable = false, length = 50)
     private String rua;
 
     @Column(name = "longitude", nullable = false)
