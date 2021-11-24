@@ -9,6 +9,7 @@ import lombok.Setter;
 public class RespostaLoginDTO {
   private String token;
   private String nome;
+  private String email;
   private TipoUsuario tipoUsuario;
   private String foto;
 }
