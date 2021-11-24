@@ -52,6 +52,7 @@ public class AutenticacaoService {
         RespostaLoginDTO respostaLoginDTO = new RespostaLoginDTO();
         respostaLoginDTO.setToken(this.gerarToken(email, senha));
         respostaLoginDTO.setNome(usuario.getNome());
+        respostaLoginDTO.setEmail(usuario.getEmail());
         respostaLoginDTO.setTipoUsuario(usuario.getTipoUsuario());
         respostaLoginDTO.setFoto(Objects.isNull(usuario.getFoto()) ? null : usuario.getFoto().getUrl());
         return respostaLoginDTO;
