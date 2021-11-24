@@ -79,7 +79,9 @@ public interface PontoRepository extends JpaRepository<Ponto, String> {
                   "         avaliacao a " +
                   "       WHERE " +
                   "         a.ponto_id = p.id " +
-                  "   ) AS nota " +
+                  "   ) AS nota, " +
+                  "   c.id as categoriaId, " +
+                  "   c.nome as categoria " +
                   "FROM " +
                   "   ponto p " +
                   "INNER JOIN categoria c ON " +
