@@ -24,7 +24,7 @@ public class RespostaFormDTO {
                 .descricao(this.descricao)
                 .date(new Date())
                 .build();
-        if (Objects.isNull(id) && !id.isEmpty()) {
+        if (Objects.nonNull(id) && !id.isEmpty()) {
             resposta.setId(id);
         }
         return resposta;

@@ -30,7 +30,7 @@ public class ItemFormDTO {
             .valor(valor)
             .foto(fotoUrl.isEmpty() ? null : new Foto(fotoUrl))
         .build();
-        if (Objects.isNull(id) && !id.isEmpty()) {
+        if (Objects.nonNull(id) && !id.isEmpty()) {
             item.setId(id);
         }
         return item;
